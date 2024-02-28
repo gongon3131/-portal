@@ -20,8 +20,11 @@ Host：192.168.4.233
 ID	root
 PASS	WmJLfbZQXi2f
 
+
 MySQL
 http://192.168.4.233/phpmyadmin/
+
+
 ID	root
 PASS	H&B2BVyFX$5x
 
