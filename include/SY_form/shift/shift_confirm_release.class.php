@@ -1,0 +1,39 @@
+<?php
+/*
+	* @class:SY_App:
+	* @work:フォームの入力チェック用クラス
+*/
+class SY_FORM_shift_confirm_release extends SY_Validate {
+
+	/**
+		* @work:フォームの初期設定:
+		* @arg::
+		* @return::
+	*/
+	function ini_form(){
+
+		$this->fdefine = array(
+
+			"token" => array(
+				"title"	=> "トークン",
+				"require" 	=> true,
+				"type" 		=> "TEXT",
+			),
+
+		);
+
+	}
+
+	/**
+		* @work:カスタムチェック:
+		* @arg::
+		* @return::
+	*/
+	function custom(){
+
+	}
+
+}
+
+
+?>
