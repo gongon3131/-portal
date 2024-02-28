@@ -342,7 +342,8 @@ class SY_App extends SY_Framework{
                 }
             }
 
-            //スキル保有対象データが0のときは、ここでトランザクションコミット
+            //スキル保有対象データが0のときは、ここでトランザクションコミットする
+        
             if($non_regist_cnt == 0){
                 //トランザクションコミット
                 //$this->mysql->commit();
