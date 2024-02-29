@@ -6,7 +6,7 @@
 ////////////////////////////////////////////////
 // ユーザー種類
 ////////////////////////////////////////////////
-$SY_define['user_type'][0]="---選択してください--";
+$SY_define['user_type'][0]="-----";
 $SY_define['user_type'][1]="OP";
 $SY_define['user_type'][2]="SV";
 $SY_define['user_type'][3]="看護師";
@@ -45,11 +45,17 @@ $SY_define['business_enable'][9]="未登録";
 ////////////////////////////////////////////////
 // 雇用形態
 ////////////////////////////////////////////////
-$SY_define['employment_status'][0]="---選択してください--";
+$SY_define['employment_status'][0]="------------";
 $SY_define['employment_status'][1]="直雇用";
 $SY_define['employment_status'][2]="スターライン";
 $SY_define['employment_status'][3]="オープンループ";
 $SY_define['employment_status'][4]="アウトソーシング";
+
+////////////////////////////////////////////////
+// インポート対象
+////////////////////////////////////////////////
+$SY_define['import_target'][1]="対象";
+$SY_define['import_target'][0]="対象外";
 
 ////////////////////////////////////////////////
 // SV希望シフト

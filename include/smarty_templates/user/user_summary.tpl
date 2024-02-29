@@ -7,9 +7,9 @@
 		<div class="row">
 			<!--メインコンテンツ-->
 			<main role="main" class="col-md-9 px-md-4">
-				<div class="form-inline ml-5 mt-5 mb-2">
-					<h5>ユーザー一覧</h5>
-					<button type="button" class="btn btn-primary ml-3" id="shift_confirm" onclick='window.location.href="user_regist.php"' >新規登録</button>
+				<div class="form-inline ml-5  mb-2">
+					<h4>従業員一覧</h4>
+					<button type="button" class="btn btn-primary ml-3 mb-2" id="shift_confirm" onclick='window.location.href="user_regist.php"' >新規登録</button>
 				</div>
 				<input type="hidden" value="{$smarty.session.login_info.user_id}" id="user_id">
 				<input type="hidden" value="{$ses_flg}" id="ses_flg">

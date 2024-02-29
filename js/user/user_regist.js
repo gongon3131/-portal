@@ -114,11 +114,17 @@ function set_user(){
 			$("#tmur_hire_date").val(json_data['tmur_hire_date']);//入社日
 			$("#tmur_authority").val(json_data['tmur_authority']);//操作権限
 			$("#tmur_authority").addClass("col-form-body");
+			$("#tmur_employment_status").val(json_data['tmur_employment_status']);//雇用形態
+			$("#tmur_employment_status").addClass("col-form-body");
 			$("#tmur_is_used").val(json_data['tmur_is_used']);//在籍フラグ
 			$("#tmur_is_used").addClass("col-form-body");
+			$("#tmur_holiday_manage").val(json_data['tmur_holiday_manage']);//雇用形態
+			$("#tmur_holiday_manage").addClass("col-form-body");
+			$("#tmur_import_status").val(json_data['tmur_import_status']);//インポート対象
+			$("#tmur_import_status").addClass("col-form-body");
 			$("#tmur_memo").val(json_data['tmur_memo']);//メモ
 			set_skill_possesion(json_data['skill_posession']);
-			console.log(json_data['skill_posession']);
+			//console.log(json_data['skill_posession']);
 			set_business_possesion(json_data['business_posession']);
 			//休日管理
 			if(json_data['tmur_authority'] == 1){

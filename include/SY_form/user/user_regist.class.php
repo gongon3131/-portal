@@ -91,6 +91,18 @@ class SY_FORM_user_regist extends SY_Validate {
 				"type" 		=> "INT",
 				"define"	=>	$this->define['enroll_status'],
 			),
+			"tmur_employment_status" => array(
+				"title"	=> "雇用形態",
+				"require" 	=> true,
+				"type" 		=> "INT",
+				"define"	=>	$this->define['employment_status'],
+			),
+			"tmur_import_status" => array(
+				"title"	=> "インポート対象",
+				"require" 	=> true,
+				"type" 		=> "INT",
+				"define"	=>	$this->define['import_target'],
+			),
 			"tmur_memo" => array(
 				"title"	=> "備考",
 				"require" 	=> false,

@@ -154,14 +154,14 @@
 										<label class="col-sm-12 col-form-label">操作権限</label>
 									</th>
 									<td class="fieldValue medium" >
-										<div class="col-md-6">
+										<div class="col-md-8">
 											{html_options name=tmur_authority id=tmur_authority class=form-control options=$SY_define.user_type selected=$SY_form.safe.tmur_authority}
 										</div>
 									</td>
 								</tr>
 								<tr>
 									<th class="fieldLabel medium">
-										<label class="col-sm-12 col-form-label"> 在籍状況</label>
+										<label class="col-sm-12 col-form-label"> 在籍状況　　</label>
 									</th>
 									<td class="fieldValue medium"  >
 										<div class="col-md-6">
@@ -172,8 +172,8 @@
 										<label class="col-sm-12 col-form-label holiday_manage_selected">休日管理</label>
 									</th>
 									<td class="fieldValue medium " >
-										<div class="col-md-6 holiday_manage_selected">
-											{html_options name=tmur_employment_status id=tmur_employment_status class=form-control options=$SY_define.holiday_manage selected=$SY_form.safe.tmur_employment_status}
+										<div class="col-md-8 holiday_manage_selected">
+											{html_options name=tmur_holiday_manage id=tmur_holiday_manage class=form-control options=$SY_define.holiday_manage selected=$SY_form.safe.tmur_holiday_manage}
 										</div>
 									</td>
 								</tr>
@@ -182,13 +182,17 @@
 										<label class="col-sm-12 col-form-label"> 雇用形態</label>
 									</th>
 									<td class="fieldValue medium"  >
-										<div class="col-md-6">
-											{html_options name=tmur_is_used id=tmur_is_used class=form-control options=$SY_define.employment_status selected=$SY_form.safe.tmur_is_used}
+										<div class="col-md-8">
+											{html_options name=tmur_employment_status id=tmur_employment_status class=form-control options=$SY_define.employment_status selected=$SY_form.safe.tmur_employment_status}
 										</div>
 									</td>
 									<th class="fieldLabel medium">
+										<label class="col-sm-12 col-form-label"> インポート</label>
 									</th>
-									<td class="fieldValue medium" >
+									<td class="fieldValue medium"  >
+										<div class="col-md-8">
+											{html_options name=tmur_import_status id=tmur_import_status class=form-control options=$SY_define.import_target selected=$SY_form.safe.tmur_import_status}
+										</div>
 									</td>
 								</tr>
 

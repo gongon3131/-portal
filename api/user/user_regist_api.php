@@ -78,6 +78,7 @@ class SY_App extends SY_Framework{
                 tmur_employment_status,
                 tmur_holiday_manage,
                 tmur_is_used,
+                tmur_import_status,
                 IFNULL(tmur_memo,'') AS tmur_memo
                 FROM tm_user
                 WHERE tmur_id = :tmur_id
@@ -115,6 +116,7 @@ class SY_App extends SY_Framework{
                     $user_ary['tmur_employment_status'] = $user['tmur_employment_status'];
                     $user_ary['tmur_holiday_manage'] = $user['tmur_holiday_manage'];
                     $user_ary['tmur_is_used'] = $user['tmur_is_used'];
+                    $user_ary['tmur_import_status'] = $user['tmur_import_status'];
                     $user_ary['skill_posession'] = $this->get_skill_possesion($user['tmur_user_id']);
                     $user_ary['business_posession'] = $this->get_business_possesion($user['tmur_user_id']);
                 }
@@ -136,10 +138,7 @@ class SY_App extends SY_Framework{
 
         //バリデート
         $this->validate('user/user_regist');
-
-        ChromePhp::log($this->vars['tmur_authority']);
-        ChromePhp::log($_POST['tmur_authority']);
-        
+       
         //エラー時処理
         if($this->error->count() > 0){
             
@@ -175,6 +174,7 @@ class SY_App extends SY_Framework{
             $sql .= " tmur_employment_status,";
             $sql .= " tmur_holiday_manage,";
             $sql .= " tmur_is_used,";
+            $sql .= " tmur_import_status,";
             $sql .= " tmur_memo,";
             $sql .= " tmur_create_date,";
             $sql .= " tmur_update_date,";
@@ -197,6 +197,7 @@ class SY_App extends SY_Framework{
             $sql .= " :tmur_employment_status,";
             $sql .= " :tmur_holiday_manage,";
             $sql .= " :tmur_is_used,";
+            $sql .= " :tmur_import_status,";
             $sql .= " :tmur_memo,";
             $sql .= " :tmur_create_date,";
             $sql .= " :tmur_update_date,";
@@ -219,6 +220,7 @@ class SY_App extends SY_Framework{
             $sql .= " tmur_employment_status = :tmur_employment_status,";
             $sql .= " tmur_holiday_manage = :tmur_holiday_manage,";
             $sql .= " tmur_is_used = :tmur_is_used,";
+            $sql .= " tmur_import_status = :tmur_import_status,";
             $sql .= " tmur_memo = :tmur_memo,";
             $sql .= " tmur_update_date = :tmur_update_date,";
             $sql .= " tmur_update_user = :tmur_update_user";
@@ -250,6 +252,7 @@ class SY_App extends SY_Framework{
             $stmt->bindParam(":tmur_employment_status" , $this->vars['tmur_employment_status']);//雇用形態
             $stmt->bindParam(":tmur_holiday_manage" , $this->vars['tmur_holiday_manage']);//休日管理
             $stmt->bindParam(":tmur_is_used" , $this->vars['tmur_is_used']);//在籍フラグ
+            $stmt->bindParam(":tmur_import_status" , $this->vars['tmur_import_status']);//インポート対象
             $stmt->bindParam(":tmur_memo" , $this->vars['tmur_memo']);//メモ
             $stmt->bindValue(":tmur_create_date" , date("Y-m-d H:i:s"));//データ作成日
             $stmt->bindValue(":tmur_update_date" , date("Y-m-d H:i:s"));//データ更新日
@@ -277,7 +280,6 @@ class SY_App extends SY_Framework{
                 $this->mysql->commit();
                 echo json_encode("ok");
                 exit();
-
 
             }
 
@@ -495,7 +497,7 @@ class SY_App extends SY_Framework{
                 $execute = $stmt->execute();       
 
                 // DEBUG OUTPUT
-                ChromePhp::log($this->db->pdo_debugStrParams($stmt));
+                //ChromePhp::log($this->db->pdo_debugStrParams($stmt));
 
             }
             
