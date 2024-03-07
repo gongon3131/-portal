@@ -13,6 +13,8 @@ include  '../ChromePhp.php';
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx as Reader;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx as Writer;
 
+
+
 /*
     * @class:SY_App:
     * @work:フレームワークのメイン部分
@@ -66,9 +68,13 @@ class SY_App extends SY_Framework{
         //インポート区分
         $this->result->add('import_kbn',$this->define['import_kbn']);
 
+
+
         $this->display('shift/shift_print.tpl');
         
     }
+
+    
 
     function get_business_color(){
 
@@ -416,7 +422,7 @@ class SY_App extends SY_Framework{
         $sheet->getColumnDimension('Z')->setVisible(false);
         //ファイル保存
         $writer = new Writer($spreadsheet);
-        $outputPath = '../excel/fugafuga.xlsx';
+        $outputPath = '../excel/hogehoge.xlsx';
         $writer->save( $outputPath );
         //ファイル名をURLにセット
         $filename = basename($outputPath);

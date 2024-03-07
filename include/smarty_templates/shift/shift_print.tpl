@@ -12,7 +12,8 @@
 					<input id="showen_date" type="date" class="form-control ml-5 mr-2 date_pk" name="showen_date" value="{$showen_date}"  />
 					{if $smarty.session.login_info.user_authority != 1}
 						<a href="{$base_url}shift/sample.php"><button type="button" class="btn btn-primary ml-3" id="shift_print">印刷</button></a>
-						<a href="{$base_url}excel/{$file_name}" download="{$file_name}"><button type="button" class="btn btn-primary ml-3" id="shift_print">印刷2</button></a>
+						<!--<a href="{$base_url}excel/{$file_name}" download="{$file_name}"><button type="button" class="btn btn-primary ml-3" id="shift_print">印刷2</button></a>-->
+						<button type="button" class="btn btn-primary ml-3" id="shift_import" data-toggle="modal" data-target="#modal_shift_import" data-backdrop="static">インポート</button>
 						<!--<a href="{$base_url}shift/sample.php">印刷2</a>-->
 					{/if}
 				</div>
@@ -63,7 +64,9 @@
 	</div>
 	<!--モーダルフォーム-->
 	{include file="modal/modal_business_color_edit.tpl"}
+	{include file="modal/modal_shift_import.tpl"}
 	<script type="text/javascript" src="{$base_url}js/shift/shift_print.js?v={$ver}"> </script>
+	<script type="text/javascript" src="{$base_url}js/shift/shift_import.js?v={$ver}"> </script>
 	<script type="text/javascript" src="{$base_url}js/modal/modal_business_color_edit.js?v={$ver}"> </script>
 </body>
 </html>
