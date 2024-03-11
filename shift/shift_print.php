@@ -44,6 +44,12 @@ class SY_App extends SY_Framework{
     //メイン画面出力アクション
     public function CALLBACK__INDEX(){
 
+        //既存ファイルの削除
+        $file_name = '../excel/*.xlsx';
+        foreach(glob($file_name) as $val){
+            unlink($val);
+        }
+
         //バリデート
         $this->validate('shift/business_assign');
 
@@ -142,8 +148,6 @@ class SY_App extends SY_Framework{
 
     public function CALLBACK__shift_print(){
 
-        //header("Content-Type: application/json; charset=utf-8");
-
         require '../../vendor/autoload.php';
 
         //バリデート
@@ -156,7 +160,7 @@ class SY_App extends SY_Framework{
 
         //テンプレートの読み込み
         $reader = new Reader;
-        $file_name = '../excel/shift_template.xlsx';
+        $file_name = '../excel_template/shift_template.xlsx';
         $spreadsheet = $reader->load($file_name);
         
         $sheet       = $spreadsheet->getActiveSheet();
@@ -416,11 +420,11 @@ class SY_App extends SY_Framework{
         $sheet->getColumnDimension('Z')->setVisible(false);
         //ファイル保存
         $writer = new Writer($spreadsheet);
-        $outputPath = '../excel/fugafuga.xlsx';
+        $outputPath = '../excel/shift_'.$_SESSION['csrf_token'].'.xlsx';
         $writer->save( $outputPath );
         //ファイル名をURLにセット
         $filename = basename($outputPath);
-        ChromePhp::log($filename);
+        //ChromePhp::log($filename);
         $this->result->add('file_name',$filename);
         
     }

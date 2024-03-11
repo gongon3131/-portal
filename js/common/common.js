@@ -71,6 +71,14 @@ function get_next_day(target_date){
 	return pattern.test(numVal);
   }
 
+  function formatDate(date, sep="") {
+	const yyyy = date.getFullYear();
+	const mm = ('00' + (date.getMonth()+1)).slice(-2);
+	const dd = ('00' + date.getDate()).slice(-2);
+  
+	return `${yyyy}${sep}${mm}${sep}${dd}`;
+  }
+
   function post(path, params, method='post') {
 
 	// The rest of this code assumes you are not using a library.

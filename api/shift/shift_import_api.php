@@ -7,10 +7,9 @@ require_once '../../common.php';
 /**デバッキングコンソール */
 include  '../../ChromePhp.php';
 /**レスポンスヘッダ */
-//header("Content-Type: application/json; charset=utf-8");
-//header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=utf-8");
 
-//ini_set('display_errors',1);
+//PhpSpreadsheetのインポート
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx as Reader;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx as Writer;
 
@@ -61,7 +60,7 @@ class SY_App extends SY_Framework{
 
         //テンプレートの読み込み
         $reader = new Reader;
-        $file_name = '../../excel/import_template.xlsx';
+        $file_name = '../../excel_template/import_template.xlsx';
         $spreadsheet = $reader->load($file_name);
         date_default_timezone_set('Asia/Tokyo');
 
@@ -110,56 +109,30 @@ class SY_App extends SY_Framework{
 
         //ファイル保存
         $writer = new Writer($spreadsheet);
-        $outputPath = '../../excel/fugafuga.xlsx';
-        $writer->save( $outputPath );
-        //ファイル名をURLにセット
-        //$filename = basename($outputPath);
+        //$filename = date('Ymd',  strtotime($period_from))."-".date('Ymd',  strtotime($period_to));
         //ChromePhp::log($filename);
-        //$this->result->add('file_name',$filename);
 
-        //$this->download($outputPath);
+        //$this->result->add('filename',$filename);
+        $filename = date('Ymd',  strtotime($period_from))."-".date('Ymd',  strtotime($period_to))."_bno_".$import_class_no.".xlsx";
 
+        //$outputPath = '../../excel/fugafuga.xlsx';
+        $outputPath = '../../excel/'.$filename;
 
-    }
+        //ob_end_clean();
+        //ob_clean();
+                
+        $writer->save( $outputPath );
 
-    function download($pPath, $pMimeType = null)
-    {
-        //-- ファイルが読めない時はエラー(もっときちんと書いた方が良いが今回は割愛)
-        if (!is_readable($pPath)) { die($pPath); }
-    
-        //-- Content-Typeとして送信するMIMEタイプ(第2引数を渡さない場合は自動判定) ※詳細は後述
-        $mimeType = (isset($pMimeType)) ? $pMimeType
-                                        : (new finfo(FILEINFO_MIME_TYPE))->file($pPath);
-    
-        //-- 適切なMIMEタイプが得られない時は、未知のファイルを示すapplication/octet-streamとする
-        if (!preg_match('/\A\S+?\/\S+/', $mimeType)) {
-            $mimeType = 'application/octet-stream';
+        if(file_exists($outputPath) == true){
+            echo json_encode("ok");
+        }else{
+            echo json_encode("ng");
         }
-    
-        //-- Content-Type
-        header('Content-Type: ' . $mimeType);
-    
-        //-- ウェブブラウザが独自にMIMEタイプを判断する処理を抑止する
-        header('X-Content-Type-Options: nosniff');
-    
-        //-- ダウンロードファイルのサイズ
-        header('Content-Length: ' . filesize($pPath));
-    
-        //-- ダウンロード時のファイル名
-        header('Content-Disposition: attachment; filename="' . basename($pPath) . '"');
-    
-        //-- keep-aliveを無効にする
-        header('Connection: close');
-    
-        //-- readfile()の前に出力バッファリングを無効化する ※詳細は後述
-        while (ob_get_level()) { ob_end_clean(); }
-    
-        //-- 出力
-        readfile($pPath);
-    
-        //-- 最後に終了させるのを忘れない
-        exit;
+
+        die;
+
     }
+
     public function get_user_info(){
 
         try{

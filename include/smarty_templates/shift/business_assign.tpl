@@ -13,6 +13,7 @@
 					{if $smarty.session.login_info.user_authority != 1}
 						<button type="button" class="btn btn-primary ml-3" id="business_color_regist">登録</button>
 						<button type="button" class="btn btn-primary ml-3" data-toggle="modal" data-target="#business_category_edit_modal" data-backdrop="static" id="business_category_edit">業務編集</button>
+						<button type="button" class="btn btn-primary ml-3" data-toggle="modal" data-target="#make_import_file" data-backdrop="static" id="business_category_edit">業務編集</button>
 					{/if}
 				</div>
 				<input type="hidden" value="{$smarty.session.login_info.user_id}" id="user_id">

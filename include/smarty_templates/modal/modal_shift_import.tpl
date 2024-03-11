@@ -13,9 +13,10 @@
         <table class="table table-striped table-condensed table-sm table-hover hope_shift_section">
           <thead class="thead-dark">
             <tr>
-              <th class="center-block w20">種別</th>
-              <th class="center-block w65">出力期間</th>
-              <th class="center-block w15">インポート</th>
+              <th class="center-block w15">種別</th>
+              <th class="center-block w55">出力期間</th>
+              <th class="center-block w15">出力</th>
+              <th class="center-block w15">ダウンロード</th>
             </tr>
             {foreach from=$import_kbn item=val key=business_no }
               <tr>
@@ -28,8 +29,11 @@
                   </div>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-primary ml-3 import_exec" data-bcno="{$business_no}">インポート</button>
+                  <button type="button" class="btn btn-primary ml-3 import_exec" data-bcno="{$business_no}">出力</button>
                 </td>
+                <td>
+                <a id="import_link" href=""><button type="button" class="btn btn-primary ml-3 import_download" id="btn_bno_{$business_no}" data-dl-bcno="{$business_no}" disabled>ダウンロード</button></a>
+                </td>                
               </tr>
             {/foreach}
             <tbody id="maintable_import_data"></tbody>

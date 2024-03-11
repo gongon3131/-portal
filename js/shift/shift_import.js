@@ -8,6 +8,25 @@ $(document).on("click",".import_exec", function() {
     var import_date_from = $("#import_date_from" + business_no).val();
     var import_date_to = $("#import_date_to" + business_no).val();
 
+    const datetime_from = new Date(import_date_from);
+    const date_from = new Date(datetime_from.getFullYear(), datetime_from.getMonth(), datetime_from.getDate());
+    const dateStr_from = formatDate(date_from);
+    const datetime_to = new Date(import_date_to);
+    const date_to = new Date(datetime_to.getFullYear(), datetime_to.getMonth(), datetime_to.getDate());
+    const dateStr_to = formatDate(date_to);
+
+    //期間整合性チェック
+    if(date_from > date_to){
+        alert("集計期間の開始日と終了日の整合性が不正です");
+        return false;
+    }
+
+    //月またぎエラー
+    if(datetime_from.getMonth() != datetime_to.getMonth()){
+        alert("月をまたぐ集計はできません");
+        return false;
+    }
+
     $.ajax({
         type:          'post',
         url:		   "../api/shift/shift_import_api.php", 
@@ -27,24 +46,19 @@ $(document).on("click",".import_exec", function() {
         // 200 OK
         success: function(json_data) {   
 
-            var err_mes = "";
-
-            //登録成功
             if(json_data == "ok"){
-                alert("選択日のシフトが公開されました");
-                //location.reload();
-            //登録失敗
+
+                var file_name = "http://192.168.4.233/new_portal/shift/import_download.php?target_filename=" + dateStr_from + "-" + dateStr_to + "_bno_" + business_no + ".xlsx";
+                $("#import_link").attr('href',file_name);
+                //ボタンの非活性を解除する
+                $("#btn_bno_" + business_no).prop("disabled", false);
+
+                alert("出力完了しました");
+
             }else if(json_data == "ng"){
-                alert("公開に失敗しました");
-            }else if(json_data == "ng_token"){
-                alert("トークンエラー");
-            }else{
-                Object.keys(json_data).forEach(function(key) {
-                    err_mes = err_mes + json_data[key] + "\n";
-                })
-                alert(err_mes);
-                
+                alert("エラーが発生しました。システム管理者にお問い合わせください。");
             }
+
         },
 
         // HTTPエラー
@@ -62,3 +76,12 @@ $(document).on("click",".import_exec", function() {
 
 });
 
+//モーダル画面閉じる
+$('#modal_shift_import').on('hidden.bs.modal', function () {
+
+    //フォーム初期化
+    $("[id^=import_date_from]").val("");
+    $("[id^=import_date_to]").val("");
+    $("[id^=btn_bno_]").prop("disabled", true);
+
+});

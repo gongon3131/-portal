@@ -11,15 +11,12 @@
 					<h3 class="section-title">勤務シフト印刷</h3>
 					<input id="showen_date" type="date" class="form-control ml-5 mr-2 date_pk" name="showen_date" value="{$showen_date}"  />
 					{if $smarty.session.login_info.user_authority != 1}
-						<a href="{$base_url}shift/sample.php"><button type="button" class="btn btn-primary ml-3" id="shift_print">印刷</button></a>
-						<!--<a href="{$base_url}excel/{$file_name}" download="{$file_name}"><button type="button" class="btn btn-primary ml-3" id="shift_print">印刷2</button></a>-->
-						<button type="button" class="btn btn-primary ml-3" id="shift_import" data-toggle="modal" data-target="#modal_shift_import" data-backdrop="static">インポート</button>
-						<!--<a href="{$base_url}shift/sample.php">印刷2</a>-->
+						<a href="{$base_url}shift/shift_download.php?token={$csrf_token}"><button type="button" class="btn btn-primary ml-3" id="shift_print">印刷</button></a>
+						<button type="button" class="btn btn-primary ml-3" id="shift_import" data-toggle="modal" data-target="#modal_shift_import" data-backdrop="static">統合ツール用ファイル作成</button>
 					{/if}
 				</div>
 				<input type="hidden" value="{$smarty.session.login_info.user_id}" id="user_id">
 				<input type="hidden" value="{$showen_date}" id="showen_date">
-				<input type="hidden" id="csrf_token" value="{$csrf_token}" />
 				<div class="table-responsive">
 					<!--グラフ表示-->
 					<div id="graph_show" class="tab-pane">
