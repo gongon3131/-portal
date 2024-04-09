@@ -15,6 +15,17 @@
 							<th class="center-block w20">登録締切日</th>
 							<th class="center-block w20">データ消去日</th>
 						</tr>
+						<!--
+						<tr>
+						<td></td>
+						<td class="hope_shift_summary_cell1"><button type="button" class="btn btn-success hope_shift_section_regist" data-id="">登録</button></td>
+						<td><input type="date" class="form-control" value="" id="tshs_start_date"></td>
+						<td><input type="date" class="form-control" value="" id="tshs_end_date"></td>
+						<td><input type="date" class="form-control" value="" id="tshs_dead_line"></td>
+						<td><input type="date" class="form-control" value="" id="tshs_delete_date"></td>
+						</tr>
+						-->
+
 						<tbody id="maintable_section"></tbody>
 					</thead>
 				</table>

@@ -675,7 +675,9 @@ class SY_App extends SY_Framework{
                     if($shift['tdbs_shift_time_old'] == 99){
                         $shift_histry_ary['change_before'] = $shift['tdbs_free_descripsion_old'];
                     }else{
-                        $shift_histry_ary['change_before'] = $this->define['hope_shift_sv'][$shift['tdbs_shift_time_old']];
+                        if($shift['tdbs_shift_time_old'] != ""){
+                            $shift_histry_ary['change_before'] = $this->define['hope_shift_sv'][$shift['tdbs_shift_time_old']];
+                        }
                     }
 
                     //変更後
@@ -683,7 +685,9 @@ class SY_App extends SY_Framework{
                     if($shift['tdbs_shift_time'] == 99){
                         $shift_histry_ary['change_after'] = $shift['tdbs_free_descripsion'];
                     }else{
-                        $shift_histry_ary['change_after'] = $this->define['hope_shift_sv'][$shift['tdbs_shift_time']];
+                        if($shift['tdbs_shift_time'] != ""){
+                            $shift_histry_ary['change_after'] = $this->define['hope_shift_sv'][$shift['tdbs_shift_time']];
+                        }
                     }
 
                 }

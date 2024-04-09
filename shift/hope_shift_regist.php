@@ -58,7 +58,7 @@ class SY_App extends SY_Framework{
         //OP版
         if($_SESSION['login_info']['user_authority'] == 9 && $this->vars['target'] == 1){
 
-            $section = $this->get_hope_shift_section();            
+            $section = $this->get_hope_shift_section();       
         
         //SV版
         }else if($_SESSION['login_info']['user_authority'] == 9 && $this->vars['target'] == 2){
@@ -91,7 +91,8 @@ class SY_App extends SY_Framework{
             $this->display('shift/hope_shift_regist.tpl');
 
         }else if($_SESSION['login_info']['user_authority'] == 9 && $this->vars['target'] == 2){
-
+            $all_user_ary = $this->get_all_sv_user();
+            $this->result->add('all_user_ary',$all_user_ary);               
             $this->display('shift/hope_shift_regist_sv.tpl');
 
         }else if($this->vars['target'] == ""){
@@ -101,12 +102,48 @@ class SY_App extends SY_Framework{
                 $this->display('shift/hope_shift_regist.tpl');
             //SV
             }else if($_SESSION['login_info']['user_authority'] == 2){
+                $all_user_ary = $this->get_all_sv_user();
+                $this->result->add('all_user_ary',$all_user_ary);               
                 $this->display('shift/hope_shift_regist_sv.tpl');
             }
 
         }
         
     }
+
+    function get_all_sv_user(){
+
+        try{
+            $sql = <<<EOF
+                SELECT
+                tmur_id,
+                tmur_user_id,
+                tmur_user_name,
+                tmur_holiday_manage
+                FROM tm_user
+                WHERE tmur_authority = 2
+                AND tmur_is_used = 1
+                ORDER BY tmur_user_id
+            EOF;
+            $stmt = $this->mysql->prepare($sql);
+
+            //クエリ実行
+            $execute = $stmt->execute();
+            //$all_user_ary = $stmt->fetchAll();
+            $all_user_ary = Array();
+            while($user = $stmt->fetch()){
+                $all_user_ary[$user['tmur_user_id']] = $user['tmur_user_id']."：".$user['tmur_user_name'];
+            }
+
+            return $all_user_ary;
+
+        } catch(Exception $e) {
+            ChromePhp::log($e);
+            return "";
+        }
+
+    }
+    
 
 }
 

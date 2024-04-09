@@ -8,7 +8,7 @@
 			<!--メインコンテンツ-->
 			<main role="main" class="col-md-9 col-lg-12 px-md-4">
 				<div class="form-inline">
-					<h3 class="section-title">確定前シフト　時間帯別人数</h3>
+					<h3 class="section-title before-contents">確定前シフト　時間帯別人数</h3>
 					<input id="date_sta" type="date" class="form-control ml-5 mr-2" name="date_sta" value="{$date_sta}"  />
 					～
 					<input id="date_end" type="date" class="form-control ml-2" name="date_end" value="{$date_end}"  />

@@ -70,6 +70,7 @@ function save_tsr_shift_for_form(){
                 
         //shift_data_ary[json[key]['tdbc_user_id']]['tdbc_memo'] = $("#tdbc_memo_" + json[key]['tdbc_user_id']).val();
         shift_data_ary[key]['tdbc_memo'] = $("#tdbc_memo_" + json[key]['tdbc_user_id']).val();
+        shift_data_ary[key]['tdbc_update_date'] = $("#tdbc_update_date_" + json[key]['tdbc_user_id']).val();
        
     })//end of foreach()					
     //console.log(shift_data_ary);
@@ -133,6 +134,7 @@ function save_tsr_shift_for_form_by_user(){
         }
                 
         shift_data_ary[key]['tdbc_memo'] = $("#tdbc_memo_" + json[key]['tdbc_shift_date']).val();
+        shift_data_ary[key]['tdbc_update_date'] = $("#tdbc_update_date_" + json[key]['tdbc_shift_date']).val();
         
     })//end of foreach()					
     //console.log(shift_data_ary);
@@ -146,6 +148,9 @@ function save_tsr_shift_for_graph(){
         //まず、メモ欄に記述があれば保存
         //shift_data_ary[json[key]['tdbc_user_id']]['tdbc_memo'] = $("#tdbc_memo_" + json[key]['tdbc_user_id']).val();
         shift_data_ary[key]['tdbc_memo'] = $("#tdbc_memo_" + json[key]['tdbc_user_id']).val();
+
+        //最終更新日
+        shift_data_ary[key]['tdbc_update_date'] = $("#tdbc_update_date_" + json[key]['tdbc_user_id']).val();
         
         //休日フラグのセット
         var holiday_flg = $("#graph_holiday_set_" + json[key]['tdbc_user_id']).val();
@@ -452,6 +457,9 @@ function save_tsr_shift_for_graph_by_user(){
         
         //まず、メモ欄に記述があれば保存
         shift_data_ary[key]['tdbc_memo'] = $("#tdbc_memo_gh" + current_date).val();
+
+        //最終更新日の保存
+        shift_data_ary[key]['tdbc_update_date'] = $("#tdbc_update_date_gh" + current_date).val();
         
         //休日フラグのセット
         var holiday_flg = $("#graph_holiday_set_" + current_date).val();

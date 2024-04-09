@@ -75,6 +75,8 @@ $SY_define['hope_shift_sv'][9]="9-13";
 $SY_define['hope_shift_sv'][10]="13-17";
 $SY_define['hope_shift_sv'][11]="17-22";
 $SY_define['hope_shift_sv'][12]="22-8";
+$SY_define['hope_shift_sv'][40]="出張";
+$SY_define['hope_shift_sv'][50]="健診";
 $SY_define['hope_shift_sv'][99]="その他";
 
 ////////////////////////////////////////////////

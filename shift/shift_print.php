@@ -188,12 +188,42 @@ class SY_App extends SY_Framework{
 
         //業務色マスタから業務名情報を取得
         $business_nm = $this->get_business_name();
-        
+
+        //休憩フラグ情報を取得・作成する
+        $rest_flg_ary = Array();
+        foreach($business_assign_ary as $opid => $data_ary){
+            foreach($data_ary as $key => $val){
+                if($val['tdsb_shift_hour'] != ""){
+                    if($val['tdsb_rest_flg'] == 1){
+                        $rest_flg_ary[$opid][$val['tdsb_shift_hour']] = 1;
+                    }else{
+                        $rest_flg_ary[$opid][$val['tdsb_shift_hour']] = 0;
+                    }   
+                }
+            }
+        }
+        //ChromePhp::log($rest_flg_ary);
+
+        //研修フラグ情報を取得・作成する
+        $training_flg_ary = Array();
+        foreach($business_assign_ary as $opid => $data_ary){
+            foreach($data_ary as $key => $val){
+                if($val['tdsb_shift_hour'] != ""){
+                    if($val['tdsb_training_flg'] == 1){
+                        $training_flg_ary[$opid][$val['tdsb_shift_hour']] = 1;
+                    }else{
+                        $training_flg_ary[$opid][$val['tdsb_shift_hour']] = 0;
+                    }
+                }
+            }
+        }
+        //ChromePhp::log($training_flg_ary);
+
         //行番号カウンター
         $row_cnt = 3;
         //列番号文字コード（B=66）
         $col_cnt = 66;
-        
+        //ChromePhp::log($shift_data_ary);
         foreach($shift_data_ary as $key => $val){
             //ChromePhp::log($shift_data_ary[$key]);
             //当該OPのシフト色分け情報
@@ -253,6 +283,7 @@ class SY_App extends SY_Framework{
             if($shift_data_ary[$key]['tdbc_holiday_flg'] == 1 || $shift_data_ary[$key]['tdbc_start_time_first'] == "" || $shift_data_ary[$key]['tdbc_end_time_first'] == ""){
             //if($shift_data_ary[$key]['tdbc_holiday_flg'] == 1 ){
                 //continue;
+                //ChromePhp::log($shift_data_ary[$key]['tdbc_user_id']);
             }else{
 
                 $start_hour_first = null;//第1区間開始時刻
@@ -273,6 +304,10 @@ class SY_App extends SY_Framework{
                 if(strlen($shift_data_ary[$key]['tdbc_end_time_second']) == 4){
                     $end_hour_second = substr($shift_data_ary[$key]['tdbc_end_time_second'],0,2);
                 }
+
+                //ChromePhp::log($shift_data_ary[$key]['tdbc_user_id']);
+                //ChromePhp::log($start_hour_first);
+                //ChromePhp::log($end_hour_first);
 
                 //当該OPのシフト色取得
                 foreach($business_assign_ary[$shift_data_ary[$key]['tdbc_user_id']] as $key2 => $val2){
@@ -325,7 +360,7 @@ class SY_App extends SY_Framework{
                         //業務番号
                         $business_id = $business_color_by_user[$i];
                         //自由記述欄情報
-                        $free_desctiption =  $free_description_by_user[$i];
+                        $free_desctiption = $free_description_by_user[$i];
                         //カラーコードRGB
                         $color_code = "";
                         //ChromePhp::log($business_id);
@@ -333,13 +368,28 @@ class SY_App extends SY_Framework{
                             $color_code = $business_ct[$business_id];
                             $color_code = str_replace('#','',$color_code);
                         }
-                        //$sheet->getCell( chr($col_cnt + $i + 1).$row_cnt )->setValue($business_color_by_user[$i]);
+
                         //自由記述欄がある場合は、そちらが優先される
                         if($free_desctiption != ""){
                             $sheet->getCell( chr($col_cnt + $i + 1).$row_cnt )->setValue($free_desctiption);
                         }else{
-                            $sheet->getCell( chr($col_cnt + $i + 1).$row_cnt )->setValue($business_id);
+
+                            //休憩の記述
+                            if($business_id == 0){
+                                if($rest_flg_ary[$shift_data_ary[$key]['tdbc_user_id']][$i] == 1){
+                                    $sheet->getCell( chr($col_cnt + $i + 1).$row_cnt )->setValue("休憩");
+                                }
+                            }else{
+                                $sheet->getCell( chr($col_cnt + $i + 1).$row_cnt )->setValue($business_id);
+                            }
+
+                            //研修の記述
+                            if($training_flg_ary[$shift_data_ary[$key]['tdbc_user_id']][$i] == 1){
+                                $sheet->getCell( chr($col_cnt + $i + 1).$row_cnt )->setValue("研修");
+                            }
+
                         }
+
                         //セル色の設定
                         if($color_code != ""){
                             $sheet->getStyle(chr($col_cnt + $i + 1).$row_cnt)
@@ -347,7 +397,7 @@ class SY_App extends SY_Framework{
                             ->setFillType('solid')
                             ->getStartColor()
                             ->setRGB($color_code);
-                        }                        
+                        }                      
                             
                     }
 

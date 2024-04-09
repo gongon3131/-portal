@@ -94,7 +94,7 @@
 
   .nav-menu-font{
     color: white !important;
-    font-size: 1.1em;
+    font-size: 1.0em;
   }
 
  /*
@@ -139,6 +139,11 @@
 .modal-content{
     height:75%; 
 }
+
+.modal-middle{
+  height:40%; 
+}
+
 
 .modal-body{
     overflow-y:auto;

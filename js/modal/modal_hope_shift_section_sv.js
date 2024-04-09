@@ -21,7 +21,7 @@ function set_section_data(){
 
 			json = json_data;
             if(json_data == ""){
-                alert("対象データがありません");
+                //alert("対象データがありません");
             }else if(json_data == "ng"){
                 alert("エラーが発生しました。システム管理者にお問い合わせください。");
             }else{

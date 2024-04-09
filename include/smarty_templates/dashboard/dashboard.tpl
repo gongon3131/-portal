@@ -14,8 +14,8 @@
 				<input type="hidden" value="{$smarty.session.login_info.user_id}" id="user_id">
 				<div class="table-responsive">
 					<div class="row">
-						<div class="col-6">
-							<h4 class="section-title">更新履歴</h4>
+						<div class="col-6 mb-3">
+							<h5 class="section-title">更新履歴</h5>
 							<div class="fixed-box-yoko2">
 								<table class="table table-striped table-condensed table-sm table-hover shift_history">
 									<thead class="thead-dark">
@@ -39,7 +39,7 @@
 						</div>
 						<div class="col-6">
 							<div class="form-inline">
-								<h4 class="section-title">メッセージ管理</h4>
+								<h5 class="section-title mb-3">メッセージ管理</h5>
 								{if $smarty.session.login_info.user_authority != 1}
 								<button type="button" class="btn btn-success ml-3 " data-toggle="modal" data-target="#modal_make_message" data-backdrop="static">メッセージ作成</button>
 								<button type="button" class="btn btn-success ml-3 " data-toggle="modal" data-target="#modal_post_message_history" data-backdrop="static" id="post_history_show">送信履歴</button>
@@ -81,7 +81,7 @@
 
 					{if $smarty.session.login_info.user_authority != 1}
 						<div class="col-12">
-							<h4 class="section-title">勤務シフト変更履歴</h4>
+							<h5 class="section-title">勤務シフト変更履歴</h5>
 							<div class="fixed-box-yoko3">
 								<table class="table table-striped table-condensed table-sm table-hover shift_history">
 									<thead class="thead-dark">

@@ -8,7 +8,7 @@
 			<!--メインコンテンツ-->
 			<main role="main" class="col-md-9 col-lg-12 px-md-4">
 				<div class="form-inline">
-					<h3 class="section-title">確定前SVシフト表</h3>
+					<h3 class="section-title before-contents">確定前SVシフト表</h3>
 					<button type="button" class="btn btn-primary ml-3" id="before_confirm_regist">登録</button>
 					<button type="button" class="btn btn-success ml-3" id="sv_shift_release">公開</button>
 				</div>

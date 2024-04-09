@@ -22,6 +22,8 @@ $(window).on('load',function(){
 
     if(section_sta == "" && section_end == ""){
         alert("有効なシフト登録期間はありません");
+		$('#shift_select_list').empty();
+
         return false;
     }
 	
@@ -230,15 +232,15 @@ $(document).on("click","#hope_shift_regist", function() {
 				alert("希望シフト登録しました");
 
 				if(user_authority == "9"){
-					$("#tmur_user_id").prop('disabled',true);
-					$("#tmur_user_name").prop('disabled',true);
-					$("#tmur_user_id").val("");
-					$("#tmur_user_name").val("");	
-					all_tab_clear();
+					$("#tmur_user_id").prop('disabled',false);
+					$("#tmur_user_name").prop('disabled',false);
+					//$("#tmur_user_id").val("");
+					//$("#tmur_user_name").val("");	
+					//all_tab_clear();
+					location.href = "http://192.168.4.233/new_portal/shift/hope_shift_summary.php?target=2";
 				}else{
 					location.reload();
 				}
-
 
 			//登録失敗
 			}else if(json_data == "ng"){
@@ -270,8 +272,10 @@ function all_tab_clear(){
 	
 	$("[id^=tdsv_shift_time_]").val(0);
 	$("[id^=tdsv_free_descripsion_]").val("");
-	$("[id^=tdsv_fixed_flg_]").prop('checked',"false");
 	$("[id^=tdsv_memo_]").val("");
+	//チェックボックス全外し
+	var $checkbox = $('input[type="checkbox"]');
+	$checkbox.removeAttr('checked').prop('checked', false).change();
 
 }
 

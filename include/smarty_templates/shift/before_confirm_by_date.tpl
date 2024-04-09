@@ -8,7 +8,7 @@
 			<!--メインコンテンツ-->
 			<main role="main" class="col-md-9 col-lg-12 px-md-4">
 				<div class="form-inline">
-					<h3 class="section-title">確定前シフト表</h3>
+					<h3 class="section-title before-contents">確定前シフト表</h3>
 					<input id="showen_date" type="date" class="form-control ml-5 mr-2 date_pk" name="showen_date" value="{$showen_date}"  />
 					<button type="button" class="btn btn-primary ml-3" id="bofore_confirm_regist">登録</button>
 					<button type="button" class="btn btn-success ml-3" id="graph_min30" value="0">30分設定</button>

@@ -80,7 +80,7 @@ function save_hope_shift_for_form(){
 }
 
 function save_hope_shift_for_graph(){
-
+    //console.log("save_hope_shift_for_graph");
 	//期間の始端と終端
 	var section_sta = $("#section_sta").val();
 	var section_end = $("#section_end").val();
@@ -100,7 +100,7 @@ function save_hope_shift_for_graph(){
 
         //休日フラグのセット
         var holiday_flg = $("#graph_holiday_set_" + current_section_date).val();
-
+        //console.log(holiday_flg);
         if(holiday_flg == 0){
             shift_data_ary[current_section_date]['tdsh_holiday_flg'] = false;
         }else if(holiday_flg == 1){

@@ -64,8 +64,11 @@ $(window).on('load',function(){
 
 	//ロード時は30分登録ボタンを非表示に
 	$('#graph_min30').css('display','none');
+
 	if($("#tmur_user_id").val() != ""){
 		get_op_name($("#tmur_user_id").val());
+	}else if($("#user_id").val() != ""){
+		get_op_name($("#user_id").val());
 	}
 
 	//ID氏名欄は管理者以外のユーザーは非活性に
@@ -83,6 +86,7 @@ $(window).on('load',function(){
 $(document).on("blur","#tmur_user_id", function() {
 	//入力されたユーザーID取得	
 	var tmur_user_id = $(this).val();
+
 	if(tmur_user_id != ""){
 		get_op_name(tmur_user_id);
 	}
@@ -218,7 +222,9 @@ $(document).on("click","#graph_clear", function() {
 	}else{
 		tab_name = activated_tab.href.replace("http://192.168.4.233/new_portal/shift/hope_shift_regist.php#" , "");
 	}
-
+	var current_url = location.href;
+	var tab_name = activated_tab.href.replace(current_url+"#" , "");
+	//console.log(tab_name);
 	if(tab_name == "graph_show"){
 		graph_clear();
 
@@ -229,7 +235,6 @@ $(document).on("click","#graph_clear", function() {
 });
 
 function graph_clear(){
-
 	$("[id^=op-col]").removeClass("op_shift_holiday");
 	$("[id^=op-col]").removeClass("op_shift_1");
 	$("[id^=op-col]").text('');
@@ -298,6 +303,9 @@ $(document).on("click","#hope_shift_regist", function() {
 		tab_name = activated_tab.href.replace("http://192.168.4.233/new_portal/shift/hope_shift_regist.php#" , "");
 	}
 
+	var current_url = location.href;
+	var tab_name = activated_tab.href.replace(current_url+"#" , "");
+	//console.log(tab_name);
 	//データを配列に保存
 	if(tab_name == 'graph_show'){
 		save_hope_shift_for_graph();
@@ -307,7 +315,7 @@ $(document).on("click","#hope_shift_regist", function() {
 	}else if(tab_name == ""){
 		save_hope_shift_for_form();
 	}
-
+	//console.log(shift_data_ary);
 	//グラフの区間チェック
 	if(chk_section() == false){
 		alert("3区間以上のシフト時間が設定されています");

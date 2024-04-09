@@ -848,7 +848,7 @@ class SY_App extends SY_Framework{
                 tdbc_holiday_flg = ths.tdsh_holiday_flg,
                 tdbc_paid_holiday_flg = ths.tdsh_paid_holiday_flg,
                 tdbc_midnight_flg = ths.tdsh_midnight_flg,
-                tdbc_memo = ths.tdsh_memo,
+                tdbc_memo = ths.tdsh_memo
 
             EOF;
 

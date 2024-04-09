@@ -216,7 +216,7 @@ class SY_App extends SY_Framework{
         $json = $_POST['remaining_holiday_ary'];
         //POSTされたjsonを配列に変換
         $remaining_holiday_ary = json_decode($json,true);
-        ChromePhp::log($remaining_holiday_ary);
+        //ChromePhp::log($remaining_holiday_ary);
         //エラーメッセージ取得
         $err_ary = $this->error->get();
 

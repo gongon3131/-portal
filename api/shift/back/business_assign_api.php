@@ -63,7 +63,6 @@ class SY_App extends SY_Framework{
                 IFNULL(cw1.tdsb_free_description , "") AS tdsb_free_description,
                 IFNULL(cw1.tdsb_rest_flg , "") AS tdsb_rest_flg,
                 IFNULL(cw1.tdsb_training_flg , "") AS tdsb_training_flg,
-                IFNULL(cw1.tdsb_update_date , "") AS tdsb_update_date,
                 IFNULL(cw1.tmbc_business_name , "") AS tmbc_business_name,
                 IFNULL(cw1.tmbc_color_code , "") AS tmbc_color_code
                 FROM tm_user AS tmu
@@ -79,7 +78,6 @@ class SY_App extends SY_Framework{
                     IFNULL(tsb.tdsb_free_description , '') AS tdsb_free_description,
                     tsb.tdsb_rest_flg AS tdsb_rest_flg,
                     tsb.tdsb_training_flg AS tdsb_training_flg,
-                    tsb.tdsb_update_date AS tdsb_update_date,
                     tbc.tmbc_business_name AS tmbc_business_name,
                     tbc.tmbc_color_code AS tmbc_color_code
                     FROM td_shift_business AS tsb
@@ -117,7 +115,6 @@ class SY_App extends SY_Framework{
                 $w_ary['tdsb_shift_hour'] = $shift['tdsb_shift_hour'];
                 $w_ary['tdsb_business_id'] = $shift['tdsb_business_id'];
                 $w_ary['tdsb_training_flg'] = $shift['tdsb_training_flg'];
-                $w_ary['tdsb_update_date'] = $shift['tdsb_update_date'];
                 $w_ary['tdsb_rest_flg'] = $shift['tdsb_rest_flg'];
                 $w_ary['tdsb_free_description'] = $shift['tdsb_free_description'];
                 $w_ary['tmbc_business_name'] = $shift['tmbc_business_name'];
@@ -135,8 +132,7 @@ class SY_App extends SY_Framework{
             $brank_ary['tdsb_business_id'] = "";
             $brank_ary['tdsb_free_description'] = "";
             $brank_ary['tdsb_rest_flg'] = "";
-            $brank_ary['tdsb_training_flg'] = ""; 
-            $brank_ary['tdsb_update_date'] = ""; 
+            $brank_ary['tdsb_training_flg'] = "";            
             $brank_ary['tmbc_business_name'] = "";
             $brank_ary['tmbc_color_code'] = "";
             $brank_ary['business_enable_priority'] = "";
@@ -453,146 +449,8 @@ class SY_App extends SY_Framework{
 
         try{
 
-            foreach($shift_data_ary as $key => $val){
-                //ChromePhp::log($val);  
-                foreach($val as $key2 => $val2){
-                    $sql = "  SELECT tdsb_update_date FROM td_shift_business WHERE tdsb_user_id = :tdsb_user_id AND tdsb_shift_date = :tdsb_shift_date AND tdsb_shift_hour = :tdsb_shift_hour";
-                    $sql .= " AND tdsb_update_date = :tdsb_update_date";
-                    $stmt = $this->mysql->prepare($sql);
-
-                    $stmt->bindValue(":tdsb_user_id" , $val2['tdsb_user_id']);
-                    $stmt->bindValue(":tdsb_shift_date" , $this->vars['tdbc_shift_date']);
-                    $stmt->bindValue(":tdsb_shift_hour" , $val2['tdsb_shift_hour']);
-                    $stmt->bindValue(":tdsb_update_date" , $val2['tdsb_update_date']);
-
-                    //クエリ実行
-                    $execute = $stmt->execute();
-                    // DEBUG OUTPUT
-                    //ChromePhp::log($this->db->pdo_debugStrParams($stmt));  
-                    
-                    $row_count = $stmt->rowCount();
-
-                    if($row_count < 1){
-                        echo json_encode("conflict_ng");
-                        exit();
-                    }
-                }
-
-            }
-
             //トランザクション開始
-            $this->mysql->beginTransaction();        
-
-            //対象日付
-            $target_date = $this->vars['tdbc_shift_date'];
-
-            $sql = "DELETE FROM td_shift_business WHERE tdsb_shift_date = :target_date";
-            $stmt = $this->mysql->prepare($sql);
-            $stmt->bindValue(":target_date" , $this->vars['tdbc_shift_date']);//シフト年月日
-
-            //クエリ実行
-            $execute = $stmt->execute();
-            // DEBUG OUTPUT
-            //ChromePhp::log($this->db->pdo_debugStrParams($stmt));  
-
-            $sql = <<<EOF
-                INSERT INTO td_shift_business
-                (
-                    tdsb_shift_date,
-                    tdsb_user_id,
-                    tdsb_shift_hour,
-                    tdsb_business_id,
-                    tdsb_free_description,
-                    tdsb_rest_flg,
-                    tdsb_training_flg,  
-                    tdsb_create_date,
-                    tdsb_update_date,
-                    tdsb_update_user
-                )
-                VALUES
-            EOF;  
-
-            $target_sql = "";
-            
-            $index = 0;
-
-            foreach($shift_data_ary as $target_userid => $val){
-                foreach($val as $key => $color_ary){
-                    //ChromePhp::log($target_date); 
-                    //$date_userid = date('Ymd',  $target_date);
-                    if($color_ary['tdsb_shift_hour'] == "" || $color_ary['tdsb_business_id'] == ""){
-                        if($color_ary['tdsb_rest_flg'] == 0){
-                            break;
-                        }
-                    }
-
-                    $target_sql .= "(";
-                    $target_sql .= ":tdsb_shift_date".$index.",";
-                    $target_sql .= ":tdsb_user_id".$index.",";
-                    $target_sql .= ":tdsb_shift_hour".$index.",";
-                    $target_sql .= ":tdsb_business_id".$index.",";
-                    $target_sql .= ":tdsb_free_description".$index.",";
-                    $target_sql .= ":tdsb_rest_flg".$index.",";
-                    $target_sql .= ":tdsb_training_flg".$index.",";
-                    $target_sql .= ":tdsb_create_date".$index.",";
-                    $target_sql .= ":tdsb_update_date".$index.",";
-                    $target_sql .= ":tdsb_update_user".$index;
-                    $target_sql .= "),";
-                    $index = $index + 1;
-                }
-            }
-
-            $target_sql = rtrim($target_sql, ",");
-            $sql = $sql.$target_sql;
-
-            $stmt = $this->mysql->prepare($sql);
-
-            $index = 0;
-
-            foreach($shift_data_ary as $target_userid => $val){
-                foreach($val as $key => $color_ary){
-                    //ChromePhp::log($color_ary);
-                    //$tdsb_shift_date = $this->h($color_ary['tdsb_shift_date']);
-                    if($color_ary['tdsb_shift_hour'] == "" || $color_ary['tdsb_business_id'] == ""){
-                        if($color_ary['tdsb_rest_flg'] == 0){
-                            break;
-                        }
-                    }
-                    
-                    $tdsb_user_id = $this->h($color_ary['tdsb_user_id']);
-                    $tdsb_shift_hour = $this->h($color_ary['tdsb_shift_hour']);
-                    $tdsb_business_id = $this->h($color_ary['tdsb_business_id']);
-                    $tdsb_free_description = $this->h($color_ary['tdsb_free_description']);
-                    $tdsb_rest_flg = $this->h($color_ary['tdsb_rest_flg']);
-                    $tdsb_training_flg = $this->h($color_ary['tdsb_training_flg']);                    
-                    $today = date("Y-m-d H:i:s");
-                    $user_id = $_SESSION['login_info']['user_id'];
-
-                    $stmt->bindValue(":tdsb_shift_date".$index , $this->vars['tdbc_shift_date']);//シフト年月日
-                    $stmt->bindValue(":tdsb_user_id".$index , $tdsb_user_id);//OPID
-                    $stmt->bindValue(":tdsb_shift_hour".$index , $tdsb_shift_hour , PDO::PARAM_INT);//シフト時間帯
-                    $stmt->bindValue(":tdsb_business_id".$index , $tdsb_business_id , PDO::PARAM_INT);//業務番号
-                    $stmt->bindValue(":tdsb_free_description".$index , $tdsb_free_description);//自由記述欄
-                    $stmt->bindValue(":tdsb_rest_flg".$index , $tdsb_rest_flg , PDO::PARAM_INT);//休憩フラグ
-                    $stmt->bindValue(":tdsb_training_flg".$index , $tdsb_training_flg , PDO::PARAM_INT);//研修フラグ                 
-                    $stmt->bindValue(":tdsb_create_date".$index , $today);
-                    $stmt->bindValue(":tdsb_update_date".$index , $today);
-                    $stmt->bindValue(":tdsb_update_user".$index , $user_id);
-                    $index = $index + 1;
-                }
-            }
-
-            //クエリ実行
-            $execute = $stmt->execute();
-            // DEBUG OUTPUT
-            //ChromePhp::log($this->db->pdo_debugStrParams($stmt));  
-            
-            //トランザクションコミット
-            $this->mysql->commit();
-            echo json_encode("ok");
-
-
-/*
+            $this->mysql->beginTransaction();            
 
             $sql = <<<EOF
                 INSERT INTO td_shift_business
@@ -700,7 +558,7 @@ class SY_App extends SY_Framework{
             //トランザクションコミット
             $this->mysql->commit();
             echo json_encode("ok");
-*/
+
         } catch(Exception $e) {
             //ロールバック
             $this->mysql->rollback();

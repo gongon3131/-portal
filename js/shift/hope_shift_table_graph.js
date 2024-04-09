@@ -2,7 +2,7 @@
 function make_hope_shift_graph(shift_date){
 
 	let contant = '<tr>';
-	contant += '<td class="form_v_middle shift_form_text"><a href="#" data-toggle="modal" data-target="#hope_shift_memo" data-backdrop="static" data-target-date="' + shift_date + '">' + shift_date + '</a><img src="../img/memo.png" class="graph_memo_icn" id="memo_icn_' + shift_date + '"></td>';
+	contant += '<td class="form_v_middle shift_form_text_hope"><a href="#" data-toggle="modal" data-target="#hope_shift_memo" data-backdrop="static" data-target-date="' + shift_date + '">' + shift_date + '</a><img src="../img/memo.png" class="graph_memo_icn" id="memo_icn_' + shift_date + '"></td>';
     contant += '<td><button type="button" value="0" class="btn btn-primary btn-sm" id="graph_holiday_set_' + shift_date + '">休日</button>';
 	contant += '<td><button type="button" value="0" class="btn btn-primary btn-sm" id="graph_paid_holiday_set_' + shift_date + '">有休</button>';
 	contant += '<td><button type="button" value="0" class="btn btn-primary btn-sm" id="graph_midnight_set_' + shift_date + '">夜勤</button>';
@@ -39,7 +39,7 @@ function make_hope_shift_graph(shift_date){
 
 //タブ遷移時に保存されているシフト情報をグラフに反映させる
 function set_hope_shift_for_graph(){
-    console.log(shift_data_ary);
+    //console.log(shift_data_ary);
 	//期間の始端と終端
 	var section_sta = $("#section_sta").val();
 	var section_end = $("#section_end").val();

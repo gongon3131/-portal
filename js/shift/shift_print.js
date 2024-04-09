@@ -379,40 +379,114 @@ function set_business_color(){
                 
                 //データ表示描写用HTML生成	
                 Object.keys(business_assign_ary).forEach(function(key) {
+
                     var w_bisiness_ary = json_data[key];
+                    //console.log(w_bisiness_ary);
+
                     Object.keys(w_bisiness_ary).forEach(function(key2) {
+                        
+                        //色情報が保存されていないとき
                         if(w_bisiness_ary[key2]['tdsb_shift_hour'] == ""){
+                            
+                            if(w_bisiness_ary[key2]['tdsb_business_id'] == "" && w_bisiness_ary[key2]['tmur_authority'] == 2){
+
+                                for(i = 0; i < 24; i++){
+                                    //クラス名を見て、色付き（黄色）のセルは優先業務の色をセットする
+                                    var class_name = $("#op-col" + zeroPadding(i,2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).attr("class");
+                                    if(class_name.indexOf('op_shift_1') > -1){
+                                        $("#op-col" + zeroPadding(i,2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).addClass("business_color" + w_bisiness_ary[key2]['business_enable_priority']);  
+                                        $("#op-col" + zeroPadding(i,2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).attr('data-bcno',w_bisiness_ary[key2]['business_enable_priority']);       
+                                        $("#op-col" + zeroPadding(i,2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).text(w_bisiness_ary[key2]['business_enable_priority']);       
+                                    }
+
+                                }
+
+                            }
+                            
                             return;
+
+                        //色情報が保存されているとき
                         }else{
-                            $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).removeClass(function(index, className) {
-                                return (className.match(/\bbusiness_color\S+/g) || []).join(' ');
-                            });
-                            $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).addClass("business_color" + w_bisiness_ary[key2]['tdsb_business_id']);  
-                            $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).attr('data-bcno',w_bisiness_ary[key2]['tdsb_business_id']);       
-                           
-                            //自由記述欄に文言がセットされているときは、こちらを優先させる
-                            var free_description = w_bisiness_ary[key2]['tdsb_free_description'];
-                            console.log(free_description);
-                            if(free_description === undefined){
-                                free_description = "";
-                            }
 
-                            if(free_description == ""){
-                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).text(w_bisiness_ary[key2]['tdsb_business_id']);  
-                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).css('font-size','');  
+                            //休憩フラグのとき
+                            if(w_bisiness_ary[key2]['tdsb_rest_flg'] == 1){
+
+                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).text("休憩");  
+                                //セル色は黄色
+                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).removeClass();
+                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).addClass("bc_text");
+                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).addClass("op_shift_1");
+                                
+                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).css('font-size','15px');
+
+                            //研修フラグ
+                            }else if(w_bisiness_ary[key2]['tdsb_training_flg'] == 1){
+                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).text("研修");  
+                                //セルに色をつける
+                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).removeClass("op_shift_1");  
+                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).addClass("business_color" + w_bisiness_ary[key2]['tdsb_business_id']);  
+                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).attr('data-bcno',w_bisiness_ary[key2]['tdsb_business_id']);       
+                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).css('font-size','15px');
                             }else{
-                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).text(free_description);  
-                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).css('font-size','17px');  
-                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).attr('data-free-des',free_description);
+
+                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).removeClass(function(index, className) {
+                                    return (className.match(/\bbusiness_color\S+/g) || []).join(' ');
+                                });
+    
+                                //セルに色をつける
+                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).removeClass("op_shift_1");  
+                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).addClass("business_color" + w_bisiness_ary[key2]['tdsb_business_id']);  
+                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).attr('data-bcno',w_bisiness_ary[key2]['tdsb_business_id']);       
+                                
+                                //自由記述欄に文言がセットされているときは、こちらを優先させる
+                                var free_description = w_bisiness_ary[key2]['tdsb_free_description'];
+                                //console.log(free_description);
+                                if(free_description === undefined){
+                                    free_description = "";
+                                }
+    
+                                if(free_description == ""){
+                                    //console.log(w_bisiness_ary[key2]['tdsb_user_id']);
+                                    //console.log(w_bisiness_ary[key2]['tdsb_business_id']);
+                                    $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).text(w_bisiness_ary[key2]['tdsb_business_id']);  
+                                    $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).css('font-size','');  
+                                }else{
+                                    $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).text(free_description);  
+                                    $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).css('font-size','17px');  
+                                    $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).attr('data-free-des',free_description);
+                                }
+    
 
                             }
+
 
                         }
 
-                    })
-                })		
+                    })// end of foreach()
+                    /*
+                    if(key != "color_info"){
+
+                        if(business_assign_ary[key][0]['tmur_authority'] == 2){
+                            
+                            for(i = 0; i < 24; i++){
+                                
+                                //クラス名を見て、色付き（黄色）のセルは優先業務の色をセットする
+                                var class_name = $("#op-col" + zeroPadding(i,2) + "_" + key).attr("class");
+                                if(class_name.indexOf('op_shift_1') > -1){
+                                    $("#op-col" + zeroPadding(i,2) + "_" + key).addClass("business_color" + business_assign_ary[key][0]['business_enable_priority']);
+                                    $("#op-col" + zeroPadding(i,2) + "_" + key).attr('data-bcno',business_assign_ary[key][0]['business_enable_priority']);
+                                    $("#op-col" + zeroPadding(i,2) + "_" + key).text(business_assign_ary[key][0]['business_enable_priority']);
+                                }
+                                
+                            }
+                            
+                        }
+                    }
+                    */
+                })//end of foreach()
 
             }
+
             disp_total();
 		},
 
@@ -429,7 +503,6 @@ function set_business_color(){
 		}
 	})	
 }
-
 //業務別合計表示処理
 function disp_total(){
 

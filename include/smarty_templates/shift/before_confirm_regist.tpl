@@ -8,7 +8,7 @@
 			<!--メインコンテンツ-->
 			<main role="main" class="col-md-9 col-lg-12 px-md-4">
 				<div class="form-inline ml-5 mt-5">
-					<h3 class="section-title">確定前シフト表</h3>
+					<h3 class="section-title before-contents">確定前シフト表</h3>
 					<div class="ml-5">
 					ID：<input id="tmur_user_id" type="text" class="form-control" name="tmur_user_id" value="{$tmur_user_id}"  />
 					氏名：<input id="tmur_user_name" type="text" class="form-control" name="tmur_user_name" value="{$tmur_user_name}"  />

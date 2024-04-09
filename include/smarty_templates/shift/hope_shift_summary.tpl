@@ -7,11 +7,19 @@
 		<div class="row">
 			<!--メインコンテンツ-->
 			<main role="main" class="col-md-9 px-md-4">
-				<div class="form-inline ml-5 mt-5">
+				<div class="form-inline ml-3 mb-3">
 					{if $section_sta == "" && $section_end == ""}
-						<h3 class="section-title">希望シフト登録状況</h3>
+						{if $target == 1}						
+							<h4 class="section-title">OP希望シフト登録状況</h4>
+						{elseif $target == 2}
+							<h4 class="section-title">SV希望シフト登録状況</h4>
+						{/if}
 					{else}
-						<h3 class="section-title">希望シフト登録状況　{$section_sta|date_format:"%Y年%m月%d日"}～{$section_end|date_format:"%Y年%m月%d日"}</h3>
+						{if $target == 1}
+							<h4 class="section-title">OP希望シフト登録状況　{$section_sta|date_format:"%Y年%m月%d日"}～{$section_end|date_format:"%Y年%m月%d日"}</h4>
+						{elseif $target == 2}
+							<h4 class="section-title">SV希望シフト登録状況　{$section_sta|date_format:"%Y年%m月%d日"}～{$section_end|date_format:"%Y年%m月%d日"}</h4>
+						{/if}
 					{/if}
 					<button type="button" class="btn btn-primary ml-3" id="shift_section" data-toggle="modal" data-target="#hope_shift_section" data-backdrop="static">希望シフト期間管理</button>
 				</div>

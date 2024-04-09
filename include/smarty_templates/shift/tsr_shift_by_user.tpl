@@ -110,6 +110,7 @@
 	<!--モーダルフォーム-->
 	{include file="modal/modal_shift_by_user_memo.tpl"}
 	{include file="modal/modal_hope_shift_detail.tpl"}
+	{include file="modal/modal_conflict.tpl"}
 	<script type="text/javascript" src="{$base_url}js/shift/tsr_shift_by_user.js?v={$ver}"> </script>
 	<script type="text/javascript" src="{$base_url}js/shift/tsr_shift_save.js?v={$ver}"> </script>
 	<script type="text/javascript" src="{$base_url}js/shift/tsr_shift_set.js?v={$ver}"> </script>

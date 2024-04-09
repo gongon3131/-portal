@@ -194,7 +194,8 @@ class SY_App extends SY_Framework{
                 IFNULL(cw2.tdbc_holiday_flg,0) AS tdbc_holiday_flg,
                 IFNULL(cw2.tdbc_paid_holiday_flg,0) AS tdbc_paid_holiday_flg,
                 IFNULL(cw2.tdbc_midnight_flg,0) AS tdbc_midnight_flg,
-                IFNULL(cw2.tdbc_memo,"") AS tdbc_memo
+                IFNULL(cw2.tdbc_memo,"") AS tdbc_memo,
+                IFNULL(cw2.tdbc_update_date,"") AS tdbc_update_date
                 FROM 
                 (
                     SELECT
@@ -218,7 +219,8 @@ class SY_App extends SY_Framework{
                     tbc.tdbc_holiday_flg AS tdbc_holiday_flg,
                     tbc.tdbc_paid_holiday_flg AS tdbc_paid_holiday_flg,
                     tbc.tdbc_midnight_flg AS tdbc_midnight_flg,
-                    tbc.tdbc_memo AS tdbc_memo
+                    tbc.tdbc_memo AS tdbc_memo,
+                    tbc.tdbc_update_date AS tdbc_update_date
                     FROM td_before_confirm_shift AS tbc
                     LEFT OUTER JOIN tm_user AS tmu
                     ON tbc.tdbc_user_id = tmu.tmur_user_id
@@ -265,6 +267,7 @@ class SY_App extends SY_Framework{
             $brank_ary['tdbc_paid_holiday_flg'] = "";
             $brank_ary['tdbc_midnight_flg'] = "";
             $brank_ary['tdbc_memo'] = "";
+            $brank_ary['tdbc_update_date'] = "";
             $brank_ary['yesterday_midnight_flg'] = "";
             $brank_ary['user_type'] = 1;
             $brank_ary['business_enable_priority'] = "";
@@ -375,7 +378,8 @@ class SY_App extends SY_Framework{
                     tdbc_holiday_flg,
                     tdbc_paid_holiday_flg,
                     tdbc_midnight_flg,
-                    tdbc_memo
+                    tdbc_memo,
+                    tdbc_update_date
                 FROM td_before_confirm_shift
                 LEFT OUTER JOIN tm_user
                 ON tdbc_user_id = tmur_user_id
@@ -415,6 +419,7 @@ class SY_App extends SY_Framework{
             $brank_ary['tdbc_paid_holiday_flg'] = 0;
             $brank_ary['tdbc_midnight_flg'] = 0;
             $brank_ary['tdbc_memo'] = "";
+            $brank_ary['tdbc_update_date'] = "";
             $brank_ary['yesterday_midnight_flg'] = 0;
 
             $roop_start_date = new Datetime($this->vars['section_sta']);
@@ -451,7 +456,7 @@ class SY_App extends SY_Framework{
             $ageArray = array_column($shift_detail, 'tdbc_shift_date');
             array_multisort($ageArray, SORT_ASC, $shift_detail);
 
-            //ChromePhp::log($shift_detail);
+            ChromePhp::log($shift_detail);
             echo json_encode($shift_detail);
 
         } catch(Exception $e) {
@@ -486,6 +491,36 @@ class SY_App extends SY_Framework{
         }   
 
         try{
+
+            //楽観的排他制御
+            foreach($shift_data_ary as $key => $val){
+
+                if($val['tdbc_update_date'] == ""){
+                    continue;
+                }
+            
+                $sql = "  SELECT tdbc_update_date FROM td_before_confirm_shift WHERE tdbc_user_id = :tdbc_user_id AND tdbc_shift_date = :tdbc_shift_date";
+                $sql .= " AND tdbc_update_date = :tdbc_update_date";
+                $stmt = $this->mysql->prepare($sql);
+
+                $stmt->bindValue(":tdbc_user_id" , $this->vars['tmur_user_id']);
+                $stmt->bindValue(":tdbc_shift_date" , $val['tdbc_shift_date']);
+                $stmt->bindValue(":tdbc_update_date" , $val['tdbc_update_date']);
+
+                //クエリ実行
+                $execute = $stmt->execute();
+                // DEBUG OUTPUT
+                ChromePhp::log($this->db->pdo_debugStrParams($stmt));  
+                
+                $row_count = $stmt->rowCount();
+
+                if($row_count < 1){
+                    echo json_encode("conflict_ng");
+                    exit();
+                }
+
+            }
+        
 
             //トランザクション開始
             $this->mysql->beginTransaction();            
@@ -634,6 +669,63 @@ class SY_App extends SY_Framework{
         }   
 
         try{
+
+            //楽観的排他制御
+            foreach($shift_data_ary as $key => $val){
+
+                if($val['tdbc_update_date'] == ""){
+                    continue;
+                }
+
+                if($val['user_type'] == 1){
+
+                    $sql = "  SELECT tdbc_update_date FROM td_before_confirm_shift WHERE tdbc_user_id = :tdbc_user_id AND tdbc_shift_date = :tdbc_shift_date";
+                    $sql .= " AND tdbc_update_date = :tdbc_update_date";
+                    $stmt = $this->mysql->prepare($sql);
+    
+                    $stmt->bindValue(":tdbc_user_id" , $val['tdbc_user_id']);
+                    $stmt->bindValue(":tdbc_shift_date" , $this->vars['tdbc_shift_date']);
+                    $stmt->bindValue(":tdbc_update_date" , $val['tdbc_update_date']);
+    
+                    //クエリ実行
+                    $execute = $stmt->execute();
+                    // DEBUG OUTPUT
+                    //ChromePhp::log($this->db->pdo_debugStrParams($stmt));
+                    
+                    $row_count = $stmt->rowCount();
+    
+                    if($row_count < 1){
+                        echo json_encode("conflict_ng");
+                        exit();
+                    }
+    
+                }
+
+                if($val['user_type'] == 2){
+
+                    $sql = "  SELECT tdbs_update_date FROM td_before_confirm_shift_sv WHERE tdbs_user_id = :tdbs_user_id AND tdbs_shift_date = :tdbs_shift_date";
+                    $sql .= " AND tdbs_update_date = :tdbs_update_date";
+                    $stmt = $this->mysql->prepare($sql);
+    
+                    $stmt->bindValue(":tdbs_user_id" , $val['tdbc_user_id']);
+                    $stmt->bindValue(":tdbs_shift_date" , $this->vars['tdbc_shift_date']);
+                    $stmt->bindValue(":tdbs_update_date" , $val['tdbc_update_date']);
+    
+                    //クエリ実行
+                    $execute = $stmt->execute();
+                    // DEBUG OUTPUT
+                    //ChromePhp::log($this->db->pdo_debugStrParams($stmt));  
+                    
+                    $row_count = $stmt->rowCount();
+    
+                    if($row_count < 1){
+                        echo json_encode("conflict_ng");
+                        exit();
+                    }
+
+                }
+            
+            }
 
             //トランザクション開始
             $this->mysql->beginTransaction();   
@@ -1077,6 +1169,7 @@ class SY_App extends SY_Framework{
                 cw.tdbs_fixed_flg AS tdbs_fixed_flg,
                 cw.tdbs_free_descripsion AS tdbs_free_descripsion,
                 IFNULL(cw.tdbs_memo , '') AS tdbs_memo,
+                IFNULL(cw.tdbs_update_date , '') AS tdbs_update_date,
                 cw.tdbs_release_flg AS tdbs_release_flg
                 FROM 
                 (
@@ -1095,7 +1188,8 @@ class SY_App extends SY_Framework{
                     tdbs_fixed_flg,
                     tdbs_free_descripsion,
                     tdbs_memo,
-                    tdbs_release_flg
+                    tdbs_release_flg,
+                    tdbs_update_date
                     FROM 
                     td_before_confirm_shift_sv
                     WHERE tdbs_shift_date = :showen_date
@@ -1197,6 +1291,8 @@ class SY_App extends SY_Framework{
                 }
                 //メモ
                 $brank_ary['tdbc_memo'] = $val['tdbs_memo'];
+                //最終更新日
+                $brank_ary['tdbc_update_date'] = $val['tdbs_update_date'];
                 //前日夜勤フラグ
                 $brank_ary['yesterday_midnight_flg'] = $yesterday_midnight_flg;
                 //ユーザータイプ（２固定）

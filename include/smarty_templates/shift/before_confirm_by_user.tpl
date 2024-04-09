@@ -8,24 +8,23 @@
 			<!--メインコンテンツ-->
 			<main role="main" class="col-md-9 col-lg-12 px-md-4">
 				<div class="form-inline ">
-					<h3 class="section-title">確定前シフト表</h3>
+					<h4 class="section-title before-contents">確定前シフト表</h4>
 					<div class="ml-5">
 						{html_options class=form-control name=tmur_user_id id=tmur_user_id options=$user_ary_kbn selected=$tmur_user_id}
 						<input id="section_sta" type="date" class="form-control ml-5 mr-2 date_pk" name="section_sta" value="{$section_sta}"  />～
 						<input id="section_end" type="date" class="form-control ml-2 mr-2 date_pk" name="section_end" value="{$section_end}"  />
 						<button type="button" class="btn btn-primary ml-3" id="show_list">表示</button>
 					</div>
-					<button type="button" class="btn btn-primary ml-3" id="bofore_confirm_regist">登録</button>
-					<button type="button" class="btn btn-secondary ml-3" id="graph_clear">クリア</button>
-					<!--<button type="button" class="btn btn-danger ml-3" id="hope_shift_delete">登録削除</button>-->
-					<button type="button" class="btn btn-success ml-3" id="graph_min30" value="0">30分設定</button>
-					<!--<button type="button" class="btn btn-secondary ml-3" id="hope_shift_summary">登録状況一覧</button>-->
+					<button type="button" class="btn btn-primary ml-1" id="bofore_confirm_regist">登録</button>
+					<button type="button" class="btn btn-secondary ml-1" id="graph_clear">クリア</button>
+					<button type="button" class="btn btn-success ml-1" id="graph_min30" value="0">30分設定</button>
 				</div>
 				<input type="hidden" value="{$smarty.session.login_info.user_id}" id="user_id"><!--OPID-->
 				<input type="hidden" value="{$smarty.session.login_info.user_authority}" id="user_authority"><!--操作権限フラグ-->
 				<input type="hidden" value="1" id="target"><!--表示ターゲット-->
-				<input type="hidden" id="csrf_token" value="{$csrf_token}" />
+				<input type="hidden" id="csrf_token" value="{$csrf_token}" /><!--トークン-->
 				<div class="table-responsive">
+				
 					<!--一覧表示部分-->
 					<div id="maintable_sumarry"></div>
 

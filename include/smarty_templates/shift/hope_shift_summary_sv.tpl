@@ -9,9 +9,9 @@
 			<main role="main" class="col-md-9 px-md-4">
 				<div class="form-inline ml-5">
 					{if $section_sta == "" && $section_end == ""}
-						<h3 class="section-title">希望シフト登録状況</h3>
+						<h3 class="section-title">SV希望シフト登録状況</h3>
 					{else}
-						<h3 class="section-title">希望シフト登録状況　{$section_sta|date_format:"%Y年%m月%d日"}～{$section_end|date_format:"%Y年%m月%d日"}</h3>
+						<h3 class="section-title">SV希望シフト登録状況　{$section_sta|date_format:"%Y年%m月%d日"}～{$section_end|date_format:"%Y年%m月%d日"}</h3>
 					{/if}
 					<button type="button" class="btn btn-primary ml-3" id="shift_section" data-toggle="modal" data-target="#hope_shift_section" data-backdrop="static">希望シフト期間管理</button>
 				</div>

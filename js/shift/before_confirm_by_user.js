@@ -245,7 +245,7 @@ function paging_graph(){
         
         contant += '<tr class="by_user_shift_height">';
         //日付
-        contant += '<td class="form_v_middle"><a href="#" class="shift_by_user_gh" data-target-date-gh="' + current_date + '">' + current_date + '</a>';
+        contant += '<td class="form_v_middle hope_shift_summary_cell1"><a href="#" class="shift_by_user_gh" data-target-date-gh="' + current_date + '">' + current_date + '</a>';
         //希望シフトアイコン
         contant += '<a hre="#" data-toggle="modal" data-target="#hope_shift_detail" data-backdrop="static" data-target-userid="' + shift_data_ary[key]['tdbc_user_id'] + '" data-target-username="' + shift_data_ary[key]['tmur_user_name'] + '"><img src="../img/kibou_icn.png" class="graph_hope_detail_icn_by_date" id="hope_detail_icn_' + current_date + '"></a>';
         //メモアイコン

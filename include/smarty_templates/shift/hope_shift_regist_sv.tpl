@@ -8,10 +8,9 @@
 			<!--メインコンテンツ-->
 			<main role="main" class="col-md-10 px-md-4">
 				<div class="form-inline ml-5 mb-3">
-					<h3 class="section-title">希望シフト登録</h3>
+					<h4 class="section-title">SV希望シフト登録</h4>
 					<div class="ml-5">
-					ID：<input id="tmur_user_id" type="text" class="form-control" name="tmur_user_id" value="{$tmur_user_id}"  />
-					氏名：<input id="tmur_user_name" type="text" class="form-control" name="tmur_user_name" value="{$tmur_user_name}"  />
+					{html_options name=tmur_user_id id=tmur_user_id class=form-control options=$all_user_ary selected=$tmur_user_id}
 					</div>
 					<button type="button" class="btn btn-primary ml-3" id="hope_shift_regist">登録</button>
 					<button type="button" class="btn btn-secondary ml-3" id="graph_clear">クリア</button>
@@ -30,13 +29,13 @@
 								<tr>
 									<th class="center-block w10 fixed01">日付</th>
 									<th class="center-block w10 fixed01">希望シフト</th>
-									<th class="center-block w45 fixed01">自由記述</th>
+									<th class="center-block w10 fixed01">自由記述</th>
 									<th class="center-block w5 fixed01">固定</th>
-									<th class="center-block w30 fixed01">備考</th>
+									<th class="center-block w65 fixed01">備考</th>
 								</tr>
 							</thead>
 							<tbody id="maintable"></tbody>
-							<div id="shift_select_list">
+							<div id="shift_select_list" style="display:none;">
 								{html_options name=tdsv_shift_time id=tdsv_shift_time class=form-control  options=$SY_define.hope_shift_sv selected=$SY_form.safe.tdsv_shift_time}
 							</div>
 						</table>

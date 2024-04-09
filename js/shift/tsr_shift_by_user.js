@@ -251,6 +251,8 @@ function paging_form(){
         contant += '<td><input type="text" data-target-date-fm="' + current_date + '" name="tdbc_memo_' + current_date + '" value="' + shift_data_ary[key]['tdbc_memo'] + '" id="tdbc_memo_' + current_date + '" class="form-control"></td>';
         //公開・非公開フラグ
         contant += '<input type="hidden" id="confirm_flg_' + current_date + '" value="' + shift_data_ary[key]['confirm_flg'] + '">';
+        //最終更新日（hiddenに保存）
+        contant += '<input type="hidden" id="tdbc_update_date_' + current_date + '" value="' + shift_data_ary[key]['tdbc_update_date'] + '">';
         contant += '</tr>';
     })					
 
@@ -317,6 +319,8 @@ function paging_graph(){
         contant += '<input type="hidden" id="confirm_flg_fm_' + current_date + '" value="' + shift_data_ary[key]['confirm_flg'] + '">';
         //前日夜勤フラグ（hiddenに保存）
         contant += '<input type="hidden" value="' + shift_data_ary[key]['yesterday_midnight_flg'] + '" id="yesterday_midnight_flg_' + current_date + '" data-target-userid="' + shift_data_ary[key]['tdbc_user_id']  + '">';
+        //最終更新日（hiddenに保存）
+        contant += '<input type="hidden" value="' + shift_data_ary[key]['tdbc_update_date'] + '" id="tdbc_update_date_gh' + current_date + '">';
         contant += '</td>';
     })		
     
@@ -890,6 +894,7 @@ function graph_clear(){
 	$("[id^=graph_midnight_set]").addClass("btn-primary");
 	$("[id^=memo_icn]").css('display',"none");
 	$("[id^=hope_shift_memo]").val('');
+	$("[id^=tdbc_update_date_gh]").val('');
 
 }
 
@@ -907,7 +912,7 @@ function form_clear(){
 	$("[id^=holiday").prop('checked', false);
 	$("[id^=paid_holiday").prop('checked', false);
 	$("[id^=memo").val("");
-
+	$("[id^=tdbc_update_date_").val("");
 }
 
 //全タブデータクリア
@@ -935,6 +940,7 @@ $(document).on("click",".shift_by_user_gh", function() {
     
     post(url,param_ary);
 });
+
 $(document).on("click",".shift_by_user_fm", function() {
     var showen_date =  $(this).data('target-date-fm');
     
@@ -1214,6 +1220,8 @@ $(document).on("click","#tsr_shift_regist", function() {
 			//登録失敗
 			}else if(json_data == "ng"){
 				alert("登録に失敗しました");
+            }else if(json_data == "conflict_ng"){
+                $('#modal_conflict').modal();
 			}else{
 				Object.keys(json_data).forEach(function(key) {
 					err_mes = err_mes + json_data[key] + "\n";
