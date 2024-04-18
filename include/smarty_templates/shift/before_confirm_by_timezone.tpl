@@ -54,7 +54,7 @@
 			</main>
 		</div>
 	</div>
-	<script type="text/javascript" src="{$base_url}js/shift/before_confirm_by_timezone.js"> </script>
+	<script type="text/javascript" src="{$base_url}js/shift/before_confirm_by_timezone.js?v={$ver}"> </script>
 	{include file="modal/modal_contents_detail.tpl"}
 
 </body>

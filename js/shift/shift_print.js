@@ -209,6 +209,7 @@ function paging_graph(){
 }
 
 //contenteditable改行禁止処理
+/*
 $(document).on("input keydown keyup keypress change","[id^=op-col]", function(e){
 		
     // 改行の入力を禁止
@@ -222,6 +223,7 @@ $(document).on("input keydown keyup keypress change","[id^=op-col]", function(e)
     $(this).text(replace2);
 
 })
+*/
 
 function set_graph_by_date(){
 
@@ -249,7 +251,7 @@ function set_graph_by_date(){
         if(yesterday_midnight_flg == 1){
             for (let i = 0; i < 8; i++){
                 $("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).addClass("op_shift_1");
-                $("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).attr("contenteditable","true");
+                //$("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).attr("contenteditable","true");
             }
         }
 
@@ -280,7 +282,7 @@ function set_graph_by_date(){
         if(midnight == true){
             for (let i = 22; i < 24; i++){
                 $("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).addClass("op_shift_1");
-                $("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).attr("contenteditable","true");
+                //$("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).attr("contenteditable","true");
             }
 			$("#graph_midnight_set_" + shift_data_ary[key]['tdbc_user_id']).val(1);
 			$("#graph_midnight_set_" + shift_data_ary[key]['tdbc_user_id']).text('解除');
@@ -324,7 +326,7 @@ function set_shift_color(start_time,end_time,target_id){
 
         for (let i = start_hour; i < end_hour; i++){
             $("#op-col" + zeroPadding(i,2) + "_" + target_id).addClass("op_shift_1");
-            $("#op-col" + zeroPadding(i,2) + "_" + target_id).attr("contenteditable","true");
+            //$("#op-col" + zeroPadding(i,2) + "_" + target_id).attr("contenteditable","true");
         }
 
         //開始時刻が30分のとき

@@ -297,14 +297,14 @@ $(document).on("click","#hope_shift_regist", function() {
         return false;
     }
 	
-	//console.log(activated_tab);
+	console.log(activated_tab);
 	var tab_name = "";
 	if(activated_tab !== undefined){
 		tab_name = activated_tab.href.replace("http://192.168.4.233/new_portal/shift/hope_shift_regist.php#" , "");
 	}
 
 	var current_url = location.href;
-	var tab_name = activated_tab.href.replace(current_url+"#" , "");
+	//tab_name = activated_tab.href.replace(current_url+"#" , "");
 	//console.log(tab_name);
 	//データを配列に保存
 	if(tab_name == 'graph_show'){

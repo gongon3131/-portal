@@ -101,10 +101,10 @@
 	<!--モーダルフォーム-->
 	{include file="modal/modal_hope_shift_memo.tpl"}
 
-	<script type="text/javascript" src="{$base_url}js/shift/hope_shift_table_show.js"> </script>
-	<script type="text/javascript" src="{$base_url}js/shift/hope_shift_table_form.js"> </script>
-	<script type="text/javascript" src="{$base_url}js/shift/hope_shift_table_graph.js"> </script>
-	<script type="text/javascript" src="{$base_url}js/shift/hope_shift_save.js"> </script>
+	<script type="text/javascript" src="{$base_url}js/shift/hope_shift_table_show.js?v={$ver}"> </script>
+	<script type="text/javascript" src="{$base_url}js/shift/hope_shift_table_form.js?v={$ver}"> </script>
+	<script type="text/javascript" src="{$base_url}js/shift/hope_shift_table_graph.js?v={$ver}"> </script>
+	<script type="text/javascript" src="{$base_url}js/shift/hope_shift_save.js?v={$ver}"> </script>
 	
 	{include file="modal/modal_contents_detail.tpl"}
 

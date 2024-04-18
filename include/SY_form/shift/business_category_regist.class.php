@@ -33,6 +33,11 @@ class SY_FORM_business_category_regist extends SY_Validate {
 				"require" 	=> true,
 				"type" 		=> "INT",
 			),
+			"tmbc_prefix" => array(
+				"title"	=> "記号",
+				"require" 	=> false,
+				"type" 		=> "TEXT",
+			),
 			"tmbc_memo" => array(
 				"title"	=> "メモ",
 				"require" 	=> false,

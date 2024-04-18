@@ -316,6 +316,7 @@ class SY_App extends SY_Framework{
                     tmbc_business_name,
                     tmbc_color_code,
                     tmbc_import_class,
+                    IFNULL(tmbc_prefix,'') AS tmbc_prefix,
                     IFNULL(tmbc_memo,'') AS tmbc_memo
                 FROM tm_business_category
             EOF;
@@ -369,6 +370,7 @@ class SY_App extends SY_Framework{
                     tmbc_business_name,
                     tmbc_color_code,
                     tmbc_import_class,
+                    tmbc_prefix,
                     tmbc_memo,
                     tmbc_create_date,
                     tmbc_update_date,
@@ -380,6 +382,7 @@ class SY_App extends SY_Framework{
                     :tmbc_business_name,
                     :tmbc_color_code,
                     :tmbc_import_class,
+                    :tmbc_prefix,
                     :tmbc_memo,
                     :tmbc_create_date,
                     :tmbc_update_date,
@@ -390,6 +393,7 @@ class SY_App extends SY_Framework{
                 tmbc_business_name = :tmbc_business_name,
                 tmbc_color_code = :tmbc_color_code,
                 tmbc_import_class = :tmbc_import_class,
+                tmbc_prefix = :tmbc_prefix,
                 tmbc_memo = :tmbc_memo,
                 tmbc_update_date = :tmbc_update_date,
                 tmbc_update_user = :tmbc_update_user
@@ -404,6 +408,7 @@ class SY_App extends SY_Framework{
             $stmt->bindValue(":tmbc_business_name" , $this->vars['tmbc_business_name']);//
             $stmt->bindValue(":tmbc_color_code" , $this->vars['tmbc_color_code']);//
             $stmt->bindValue(":tmbc_import_class" , $this->vars['tmbc_import_class'] , PDO::PARAM_INT);//
+            $stmt->bindValue(":tmbc_prefix" , $this->vars['tmbc_prefix']);//
             $stmt->bindValue(":tmbc_memo" , $this->vars['tmbc_memo']);//
             $stmt->bindValue(":tmbc_create_date" , $today);
             $stmt->bindValue(":tmbc_update_date" , $today);

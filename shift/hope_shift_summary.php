@@ -33,6 +33,9 @@ class SY_App extends SY_Framework{
         //ベースディレクトリ
         $this->result->add('base_url',$this->config['BASE_URL']);
 
+        //JS/CSSファイルのバージョン値（キャッシュ対策）
+        $this->result->add('ver',rand());
+
     }
 
     //メイン画面出力アクション
@@ -41,8 +44,6 @@ class SY_App extends SY_Framework{
         //バリデート
         $this->validate('shift/hope_shift_summary');
 
-        //JS/CSSファイルのバージョン値（キャッシュ対策）
-        $this->result->add('ver',rand());
         //現在の希望シフト登録期間
         $section;
         //OP

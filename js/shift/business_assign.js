@@ -216,6 +216,17 @@ function paging_graph(){
 
 }
 
+//自治体取り込み
+/*
+$(document).on("click","#lg_import", function() {
+    console.log("hogehoge");
+
+
+
+
+});
+*/
+
 //contenteditable改行禁止処理
 $(document).on("input keydown keyup keypress change","[id^=op-col]", function(e){
 //$(document).on("input  keyup  change","[id^=op-col]", function(e){

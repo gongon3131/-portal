@@ -275,7 +275,7 @@ form {
 
 .by_date_shift_total_cell{
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     background-color: ivory;
 }
@@ -327,6 +327,21 @@ form {
 }
 .select_pk{
     font-size:20px;
+}
+
+.sat_day{
+  background-color: #87ceeb !important;
+}
+
+.sun_day{
+  background-color: #ff7f50 !important;
+}
+
+.sv_shift_date_cell{
+  border-left: 1px solid #000 !important;
+  /*border-right: 1px solid #000 !important;*/
+  z-index: -1;
+
 }
 
 .center-block{
@@ -688,6 +703,11 @@ div.fixed-box-yoko4 {
 .sv-shift{
     table-layout:fixed;
     width: 130% !important;
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+
 }
 
 .table_box_sv_shift{
@@ -719,6 +739,18 @@ div.fixed-box-yoko4 {
     border:1px solid #000;
     background-color:#fff;
 }
+
+.contextmenu_sv_shift{
+  display:none;
+  position:fixed;
+  left:0px;
+  top:0px;
+  width:180px;
+  height:70px !important;
+  border:1px solid #000;
+  background-color:#fff;
+}
+
 #contextmenu li{
     cursor:pointer;
 }

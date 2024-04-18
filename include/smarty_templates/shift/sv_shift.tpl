@@ -33,6 +33,10 @@
 				{foreach from=$sv_user_ary item=val key=keyname }
 					<input type="hidden"  class="target_user_id" value="{$val.tmur_user_id}">
 				{/foreach}
+				<!--会社休日の配列-->
+				{foreach from=$company_holiday_ary item=val key=keyname }
+					<input type="hidden"  class="holiday_date" value="{$val.tmur_user_id}">
+				{/foreach}
 				<!--シフト登録用セレクトボックス-->
 				<div class="shift_number_select">
 					{html_options class=form-control-sm name=tdbs_shift_time id=tdbs_shift_time options=$SY_define.hope_shift_sv selected=$tdbs_shift_time}
@@ -49,8 +53,8 @@
 					</datalist>
 				</div>
 				<!--右クリックメニュー-->
-				<div id="contextmenu">
-					<ul>
+				<div id="contextmenu" class="contextmenu_sv_shift">
+					<ul class="contextmenu_box">
 						<li onClick="non_change()" id="non_chenge_text" class="mt-2">変更なしに設定</li>
 						<li  id="modal_memo_show" class="mt-2" data-toggle="modal" data-target="#sv_shift_memo" data-backdrop="static" data-target_userid="" data-target_shift-date="">メモ登録</li>
 						<input type="hidden" id="fixed_flg" val="">
@@ -127,7 +131,7 @@
 	{include file="modal/modal_hope_shift_detail.tpl"}
 	{include file="modal/modal_sv_shift_free_description.tpl"}
 	<script type="text/javascript" src="{$base_url}js/shift/sv_shift.js?v={$ver}"> </script>
-	<script type="text/javascript" src="{$base_url}js/modal/modal_hope_shift_detail.js"> </script>
+	<script type="text/javascript" src="{$base_url}js/modal/modal_hope_shift_detail.js?v={$ver}"> </script>
 
 </body>
 </html>

@@ -38,7 +38,7 @@
 	</div>
 	<!--モーダルフォーム-->
 	{include file="modal/modal_hope_shift_detail.tpl"}
-	<script type="text/javascript" src="{$base_url}js/shift/hope_shift_summary_personal.js"> </script>
-	<script type="text/javascript" src="{$base_url}js/modal/modal_hope_shift_detail.js"> </script>
+	<script type="text/javascript" src="{$base_url}js/shift/hope_shift_summary_personal.js?v={$ver}"> </script>
+	<script type="text/javascript" src="{$base_url}js/modal/modal_hope_shift_detail.js?v={$ver}"> </script>
 </body>
 </html>

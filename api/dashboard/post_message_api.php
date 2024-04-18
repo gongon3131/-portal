@@ -115,7 +115,7 @@ class SY_App extends SY_Framework{
 
         try{
 
-            $sql = "SELECT tdms_id,tdms_title,REPLACE(tdms_contents,'\n','<br>') AS tdms_contents,tdms_post_user,tmur_user_name,tdms_open_confirm FROM td_message ";
+            $sql = "SELECT tdms_id,tdms_title,REPLACE(tdms_contents,'\n','<br>') AS tdms_contents,tdms_post_user,tmur_user_id,tmur_user_name,tdms_open_confirm FROM td_message ";
             $sql .= " LEFT OUTER JOIN tm_user";
             $sql .= " ON tmur_user_id = tdms_post_user";
             $sql .= " WHERE tdms_id = :tdms_id";
@@ -134,6 +134,7 @@ class SY_App extends SY_Framework{
             if($row_count == 1){
                 while($message = $stmt->fetch()){
                     $message_ary['post_user'] = $message['tmur_user_name'];
+                    $message_ary['post_user_id'] = $message['tmur_user_id'];
                     $message_ary['post_title'] = $message['tdms_title'];
                     $message_ary['post_contents'] = str_replace('\n','<br>',$message['tdms_contents']);
                     $message_ary['post_id'] = $message['tdms_id'];
@@ -143,8 +144,6 @@ class SY_App extends SY_Framework{
             }
 
             echo json_encode($message_ary);
-
-
 
         } catch(Exception $e) {
             ChromePhp::log($e);

@@ -16,6 +16,9 @@ var selected_user_id;
 var selected_shift_date;
 var g_current_shift_num;
 
+//会社休日
+var company_holiday_ary;
+
 const more = $('[id^=shift_cell_]');
 
 /**イベントハンドラ */
@@ -25,7 +28,8 @@ $(window).on('load', sv_shift_kensaku);
 //日付変更時イベント
 $(document).on("change","#section_list", function() {
 
-    by_date_kensaku();
+    //by_date_kensaku();
+    sv_shift_kensaku();
 });
 
 function sv_shift_kensaku(){
@@ -87,8 +91,54 @@ function sv_shift_kensaku(){
             }else{
                 //データ表示描写用HTML生成	
                 //console.log(shift_data_ary);
-                paging_form();
+                //paging_form();
 
+                //始端と終端をhiddenにセットしておく
+                $.ajax({
+                    type:          'post',
+                    url:		   "../api/shift/sv_shift_api.php", 
+                    //受信データ形式（jsonもしくはtextを選択する)
+                    //dataType:      'json',
+                    //contentType:   'application/json',
+                    scriptCharset: 'utf-8',
+                    data:          {
+                                    'action'	         : 'get_sv_section_date',
+                                    'tshs_id'            :tshs_id
+                                    },
+                    
+                    // 200 OK
+                    success: function(json_data) {   
+            
+                        if(json_data == "ng"){
+                            alert("エラーが発生しました。システム管理者にお問い合わせください。");
+                            console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+                            console.log("textStatus     : " + textStatus);
+                            console.log("errorThrown    : " + errorThrown.message);	
+                        }else{
+                            $("#section_sta").val(json_data['tshs_start_date']);
+                            $("#section_end").val(json_data['tshs_end_date']);
+                            //会社休日の保存
+                            console.log(json_data['company_holiday']);
+                            company_holiday_ary = json_data['company_holiday'];
+                            paging_form();
+
+                        }
+
+                    },
+            
+                    // HTTPエラー
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {         
+                        alert("エラーが発生しました。システム管理者にお問い合わせください。");
+                        console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+                        console.log("textStatus     : " + textStatus);
+                        console.log("errorThrown    : " + errorThrown.message);	
+                    },
+            
+                    // 成功・失敗に関わらず通信が終了した際の処理
+                    complete: function() {     
+                    }
+                })	
+            
             }
 		},
 
@@ -116,9 +166,25 @@ function paging_form(){
 
     Object.keys(shift_data_ary).forEach(function(key) {
 
-        contant += '<tr>';
+        //土日判定
+        var _day = new Date(key);
+
+        //会社休日
+        if(company_holiday_ary.includes(key)){
+            contant += '<tr class="sun_day">';
+        //日曜日
+        }else if(_day.getDay() == 0){
+            contant += '<tr class="sun_day">';
+        //土曜日
+        }else if(_day.getDay() == 6){
+            contant += '<tr class="sat_day">';
+        }else{
+            contant += '<tr>';
+        }
+
+        //contant += '<tr>';
         //日付
-        contant += '<th class="sticky_row">' + key + '</th>';
+        contant += '<th class="sv_shift_date_cell">' + key + '</th>';
         //console.log(shift_data_ary[key]);
         Object.keys(shift_data_ary[key]).forEach(function(key2) {
 
@@ -642,8 +708,8 @@ function save_sv_shift(identification){
 		var year = date_s.getFullYear();
 		var month = date_s.getMonth() + 1;
 		var day = date_s.getDate();		
-		current_section_date = year + "-" + zeroPadding(month,2) + "-" + zeroPadding(day,2);
-
+		var current_section_date_w = year + "-" + zeroPadding(month,2) + "-" + zeroPadding(day,2);
+        //console.log(current_section_date_w);
         //エラーメッセージ
         var err_mes = "";
 
@@ -652,7 +718,7 @@ function save_sv_shift(identification){
             var header_userid = $(this).attr('data-header-userid');
 
             //シフト時間
-            var tdbs_shift_time = $("#shift_cell_" + header_userid + "_" + current_section_date).attr("data-shift-val");
+            var tdbs_shift_time = $("#shift_cell_" + header_userid + "_" + current_section_date_w).attr("data-shift-val");
             //console.log(tdbs_shift_time);
             //console.log(typeof(tdbs_shift_time));
 
@@ -663,13 +729,13 @@ function save_sv_shift(identification){
                 }
             }else if(identification == 2){
                 if(tdbs_shift_time === undefined || tdbs_shift_time == null || tdbs_shift_time == 0 || tdbs_shift_time == ""){
-                    err_mes = err_mes + header_userid + "：" + current_section_date + "のシフト登録がされていません";
+                    err_mes = err_mes + header_userid + "：" + current_section_date_w + "のシフト登録がされていません";
                 }
             }
 
 
             //変更なしフラグ
-            var tdbs_fixed_flg = $("#shift_cell_" + header_userid + "_" + current_section_date).attr("data-fixed");
+            var tdbs_fixed_flg = $("#shift_cell_" + header_userid + "_" + current_section_date_w).attr("data-fixed");
             if(tdbs_fixed_flg === undefined){
                 tdbs_fixed_flg = "";
             }
@@ -677,31 +743,33 @@ function save_sv_shift(identification){
             //自由記述
             var tdbs_free_descripsion = "";
             if(tdbs_shift_time == 99){
-                tdbs_free_descripsion = $("#shift_cell_" + header_userid + "_" + current_section_date).text();
+                tdbs_free_descripsion = $("#shift_cell_" + header_userid + "_" + current_section_date_w).text();
             }else if(tdbs_free_descripsion === undefined){
                 tdbs_free_descripsion = "";
             }
 
             //メモ
-            var tdbs_memo = $("#shift_cell_" + header_userid + "_" + current_section_date).attr('data-memo');
+            var tdbs_memo = $("#shift_cell_" + header_userid + "_" + current_section_date_w).attr('data-memo');
             if(tdbs_memo === undefined){
                 tdbs_memo = "";
             }
             
             //シフト時間のテキスト表示
-            var tdbs_shift_time_text = $("#shift_cell_" + header_userid + "_" + current_section_date).text();
+            var tdbs_shift_time_text = $("#shift_cell_" + header_userid + "_" + current_section_date_w).text();
             //console.log(header_userid);
             if(tdbs_shift_time_text === undefined){
                 tdbs_shift_time_text = "";
             }
-            
-            shift_data_ary[current_section_date][header_userid]['tdbs_user_id'] = header_userid;
-            shift_data_ary[current_section_date][header_userid]['tdbs_shift_date'] = current_section_date;
-            shift_data_ary[current_section_date][header_userid]['tdbs_shift_time'] = tdbs_shift_time;
-            shift_data_ary[current_section_date][header_userid]['tdbs_fixed_flg'] = tdbs_fixed_flg;
-            shift_data_ary[current_section_date][header_userid]['tdbs_free_descripsion'] = tdbs_free_descripsion;
-            shift_data_ary[current_section_date][header_userid]['tdbs_memo'] = tdbs_memo;
-            shift_data_ary[current_section_date][header_userid]['tdbs_shift_time_text'] = tdbs_shift_time_text;
+            //console.log(shift_data_ary);
+            //console.log(shift_data_ary[current_section_date_w]);
+
+            shift_data_ary[current_section_date_w][header_userid]['tdbs_user_id'] = header_userid;
+            shift_data_ary[current_section_date_w][header_userid]['tdbs_shift_date'] = current_section_date;
+            shift_data_ary[current_section_date_w][header_userid]['tdbs_shift_time'] = tdbs_shift_time;
+            shift_data_ary[current_section_date_w][header_userid]['tdbs_fixed_flg'] = tdbs_fixed_flg;
+            shift_data_ary[current_section_date_w][header_userid]['tdbs_free_descripsion'] = tdbs_free_descripsion;
+            shift_data_ary[current_section_date_w][header_userid]['tdbs_memo'] = tdbs_memo;
+            shift_data_ary[current_section_date_w][header_userid]['tdbs_shift_time_text'] = tdbs_shift_time_text;
 
         });			
     

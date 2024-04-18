@@ -193,7 +193,46 @@ class SY_App extends SY_Framework{
             echo json_encode("ng");
         }
 
-    }//end of class
+    }
+
+    public function CALLBACK__get_sv_section_date(){
+
+        //バリデート
+        $this->validate('shift/get_sv_section_date');
+
+        try{
+            $sql = <<<EOF
+                SELECT
+                tshs_id,
+                tshs_start_date,
+                tshs_end_date
+                FROM ts_hope_shift_section_sv
+                WHERE tshs_id = :tshs_id
+            EOF;
+            $stmt = $this->mysql->prepare($sql);
+
+            $stmt->bindParam(":tshs_id" , $this->vars['tshs_id']);
+
+            //クエリ実行
+            $execute = $stmt->execute();
+            $row_count = $stmt->rowCount();
+
+            if($row_count == 1){
+                $sv_shift_section_ary = $stmt->fetch();
+                $company_holiday_ary = $this->get_company_holiday($sv_shift_section_ary['tshs_start_date'],$sv_shift_section_ary['tshs_end_date']);
+                $sv_shift_section_ary['company_holiday'] = $company_holiday_ary;
+                echo json_encode($sv_shift_section_ary);
+            }else{
+                echo json_encode("ng");
+            }
+
+
+        } catch(Exception $e) {
+            ChromePhp::log($e);
+            return "";
+        }
+ 
+    }
 
     public function CALLBACK__before_confirm_shift_sv_regist(){
 
@@ -378,7 +417,7 @@ class SY_App extends SY_Framework{
                 tsch_update_user = VALUES(tsch_update_user)
             EOF;  
             $stmt = $this->mysql->prepare($sql);
-            ChromePhp::log($sql);
+            //ChromePhp::log($sql);
             foreach($remaining_holiday_ary as $target_user_id => $val){
 
                 $tsch_start_date = $this->vars['section_sta'];
@@ -411,6 +450,46 @@ class SY_App extends SY_Framework{
             ChromePhp::log($e);
             echo json_encode("ng");
         }
+
+    }
+
+    function get_company_holiday($start_date,$end_date){
+
+        $holiday_ary = Array();
+
+        //期間中の祝日
+        try{
+            $sql = <<<EOF
+                SELECT
+                tshs_date,
+                tshs_holiday_name
+                FROM ts_company_holiday
+                WHERE tshs_date >= :start_date
+                AND tshs_date <= :end_date
+
+            EOF;
+            $stmt = $this->mysql->prepare($sql);
+
+            $stmt->bindParam(":start_date" , $start_date);
+            $stmt->bindParam(":end_date" , $end_date);
+
+            //クエリ実行
+            $execute = $stmt->execute();
+
+            // DEBUG OUTPUT
+            //ChromePhp::log($this->db->pdo_debugStrParams($stmt));
+
+            while($holiday = $stmt->fetch()){
+                $holiday_ary[] = $holiday['tshs_date'];
+            }
+
+            return $holiday_ary;
+
+
+        } catch(Exception $e) {
+            ChromePhp::log($e);
+            return "";
+        }        
 
     }
 

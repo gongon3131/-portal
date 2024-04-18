@@ -80,7 +80,8 @@ function paging_business(json){
 		contant += '<td><input type="color" class="form-control" value="' + json[key]['tmbc_color_code'] + '" id="tmbc_color_code_' + json[key]['tmbc_business_id'] + '"></td>';
 		//tmbc_import_classのid名を変更
 		import_html = import_html.replace('id="tmbc_import_class_0"','id="tmbc_import_class_' + json[key]['tmbc_business_id']+'"')
-		contant += '<td>' + import_html + '</td>';		
+		contant += '<td>' + import_html + '</td>';	
+		contant += '<td><input type="text" class="form-control" value="' + json[key]['tmbc_prefix'] + '" id="tmbc_prefix_' + json[key]['tmbc_business_id'] + '"></td>';
 		contant += '<td><input type="text" class="form-control" value="' + json[key]['tmbc_memo'] + '" id="tmbc_memo_' + json[key]['tmbc_business_id'] + '"></td>';
         contant += '</tr>';
 
@@ -114,6 +115,8 @@ $(document).on("click",".business_category_regist", function() {
 	var tmbc_color_code = $("#tmbc_color_code_" + id).val();
 	//インポート区分
 	var tmbc_import_class = $("#tmbc_import_class_" + id).val();
+	//記号
+	var tmbc_prefix = $("#tmbc_prefix_" + id).val();
 	//メモ
 	var tmbc_memo = $("#tmbc_memo_" + id).val();
 	//新規登録のときは重複チェックをする
@@ -137,6 +140,7 @@ $(document).on("click",".business_category_regist", function() {
 						'tmbc_business_name'	: tmbc_business_name,
 						'tmbc_color_code'		: tmbc_color_code,
 						'tmbc_import_class'		: tmbc_import_class,
+						'tmbc_prefix'			: tmbc_prefix,
 						'tmbc_memo'				: tmbc_memo,
 						'token'					: $("#csrf_token").val()
 						},

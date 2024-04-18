@@ -14,9 +14,10 @@
 							<th class="center-block w5">登録</th>
 							<th class="center-block w10">業務番号</th>
 							<th class="center-block w25">業務名</th>
-							<th class="center-block w15">カラーコード</th>
+							<th class="center-block w10">カラーコード</th>
 							<th class="center-block w15">インポート分類</th>
-							<th class="center-block w25">メモ</th>
+							<th class="center-block w10">記号</th>
+							<th class="center-block w20">メモ</th>
 						</tr>
 						<tbody>
 						<tr>
@@ -26,6 +27,7 @@
 							<td><input type="text" class="form-control" value="" id="tmbc_business_name_0"></td>
 							<td><input type="color" class="form-control" value="#ff0000" id="tmbc_color_code_0"></td>
 							<td id="import_select">{html_options class=form-control name=tmbc_import_class id=tmbc_import_class_0 options=$import_kbn selected=$tmbc_import_class}</td>
+							<td><input type="text" class="form-control" value="" id="tmbc_prefix_0"></td>
 							<td><input type="text" class="form-control" value="" id="tmbc_memo_0"></td>
 						</tr>
 						</tbody>

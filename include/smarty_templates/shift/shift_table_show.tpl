@@ -111,7 +111,7 @@
 			</main>
 		</div>
 	</div>
-	<script type="text/javascript" src="{$base_url}js/shift/shift_table_show.js"> </script>
+	<script type="text/javascript" src="{$base_url}js/shift/shift_table_show.js?v={$ver}"> </script>
 	{include file="modal/modal_contents_detail.tpl"}
 
 </body>

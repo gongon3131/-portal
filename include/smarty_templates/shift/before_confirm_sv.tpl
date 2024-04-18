@@ -121,7 +121,7 @@
 	{include file="modal/modal_hope_shift_detail.tpl"}
 	{include file="modal/modal_sv_shift_free_description.tpl"}
 	<script type="text/javascript" src="{$base_url}js/shift/before_confirm_sv.js?v={$ver}"> </script>
-	<script type="text/javascript" src="{$base_url}js/modal/modal_hope_shift_detail.js"> </script>
+	<script type="text/javascript" src="{$base_url}js/modal/modal_hope_shift_detail.js?v={$ver}"> </script>
 
 </body>
 </html>

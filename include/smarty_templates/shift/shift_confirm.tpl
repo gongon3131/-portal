@@ -36,7 +36,7 @@
 		</div>
 	</div>
 	<!--モーダルフォーム-->
-	<script type="text/javascript" src="{$base_url}js/shift/shift_confirm.js"> </script>
+	<script type="text/javascript" src="{$base_url}js/shift/shift_confirm.js?v={$ver}"> </script>
 	
 </body>
 </html>

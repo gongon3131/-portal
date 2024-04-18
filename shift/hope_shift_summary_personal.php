@@ -33,13 +33,14 @@ class SY_App extends SY_Framework{
         //ベースディレクトリ
         $this->result->add('base_url',$this->config['BASE_URL']);
 
+        //JS/CSSファイルのバージョン値（キャッシュ対策）
+        $this->result->add('ver',rand());
+
     }
 
     //メイン画面出力アクション
     public function CALLBACK__INDEX(){
 
-        //JS/CSSファイルのバージョン値（キャッシュ対策）
-        $this->result->add('ver',rand());
         $this->display('shift/hope_shift_summary_personal.tpl');
 
     }

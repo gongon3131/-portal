@@ -33,13 +33,14 @@ class SY_App extends SY_Framework{
         //ベースディレクトリ
         $this->result->add('base_url',$this->config['BASE_URL']);
 
+        //JS/CSSファイルのバージョン値（キャッシュ対策）
+        $this->result->add('ver',rand());
+
     }
 
     //メイン画面出力アクション
     public function CALLBACK__INDEX(){
 
-        //JS/CSSファイルのバージョン値（キャッシュ対策）
-        $this->result->add('ver',rand());
         //バリデート
         $this->validate('shift/summary_by_date');
 
@@ -232,6 +233,13 @@ class SY_App extends SY_Framework{
             ChromePhp::log($e);
             return "";
         }
+
+    }
+
+    function get_company_holiday($start_date,$end_date){
+
+        
+
 
     }
 

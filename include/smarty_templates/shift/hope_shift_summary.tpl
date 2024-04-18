@@ -53,9 +53,9 @@
 	<!--モーダルフォーム-->
 	{include file="modal/modal_hope_shift_detail.tpl"}
 	{include file="modal/modal_hope_shift_section.tpl"}
-	<script type="text/javascript" src="{$base_url}js/shift/hope_shift_summary.js"> </script>
-	<script type="text/javascript" src="{$base_url}js/modal/modal_hope_shift_section.js"> </script>
-	<script type="text/javascript" src="{$base_url}js/modal/modal_hope_shift_detail.js"> </script>
+	<script type="text/javascript" src="{$base_url}js/shift/hope_shift_summary.js?v={$ver}"> </script>
+	<script type="text/javascript" src="{$base_url}js/modal/modal_hope_shift_section.js?v={$ver}"> </script>
+	<script type="text/javascript" src="{$base_url}js/modal/modal_hope_shift_detail.js?v={$ver}"> </script>
 	
 </body>
 </html>

@@ -39,6 +39,9 @@ class SY_App extends SY_Framework{
         //ベースディレクトリ
         $this->result->add('base_url',$this->config['BASE_URL']);
 
+        //JS/CSSファイルのバージョン値（キャッシュ対策）
+        $this->result->add('ver',rand());
+
     }
 
     //メイン画面出力アクション
@@ -53,8 +56,6 @@ class SY_App extends SY_Framework{
         //バリデート
         $this->validate('shift/business_assign');
 
-        //JS/CSSファイルのバージョン値（キャッシュ対策）
-        $this->result->add('ver',rand());
         // ワンタイムトークン生成
         $toke_byte = openssl_random_pseudo_bytes(16);
         $csrf_token = bin2hex($toke_byte);
