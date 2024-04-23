@@ -126,7 +126,7 @@
 										<label class="col-sm-12 col-form-label">メールアドレス</label>
 									</th>
 									<td class="fieldValue medium" >
-										<div class="col-md-6">
+										<div class="col-md-12">
 											<input type="text" class="form-control col-form-body" id="tmur_mail" name="tmur_mail" value="{$SY_form.safe.tmur_mail}" placeholder="" />
 										</div>
 									</td>

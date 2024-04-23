@@ -70,7 +70,7 @@ class SY_App extends SY_Framework{
         $OCCUPATION = 67;//C列
         $EMPLOYMENT_STA = 68;//D列
         $HOUR_ZERO = 69;//E列
-        //ChromePhp::log($all_import_data_ary);
+        ChromePhp::log($all_import_data_ary);
         foreach($all_import_data_ary as $target_date => $op_data){
 
             //行番号カウンター
@@ -238,7 +238,7 @@ class SY_App extends SY_Framework{
                     //クエリ実行
                     $execute = $stmt->execute();
                     // DEBUG OUTPUT
-                    //ChromePhp::log($this->db->pdo_debugStrParams($stmt));
+                    ChromePhp::log($this->db->pdo_debugStrParams($stmt));
                     
                     $business_data_ary = Array();
 

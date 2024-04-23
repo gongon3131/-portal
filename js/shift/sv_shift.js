@@ -40,9 +40,16 @@ function sv_shift_kensaku(){
     var tshs_id = $("#section_list").val();
 
     //シフト時間のセレクトボックスHTMLを保存しておく
-    shift_select_html = $('.shift_number_select').html();
+    if($('.shift_number_select').html() != ""){
+        shift_select_html = $('.shift_number_select').html();
+    }
+    //shift_select_html = $('.shift_number_select').html();
+    //console.log(shift_select_html);
     //シフト時間のデータリストHTMLを保尊しておく
-    shift_data_list_html = $('.shift_data_list').html();
+    if($('.shift_data_list').html() != ""){
+        shift_data_list_html = $('.shift_data_list').html();
+    }
+    //shift_data_list_html = $('.shift_data_list').html();
     //保存したらテンプレートは削除しておく
     $('.shift_number_select').empty();
     $('.shift_data_list').empty();
@@ -168,23 +175,27 @@ function paging_form(){
 
         //土日判定
         var _day = new Date(key);
-
+        
         //会社休日
         if(company_holiday_ary.includes(key)){
             contant += '<tr class="sun_day">';
-        //日曜日
+            contant += '<th class="before_sv_cell sticky_col sun_day_text">' + key + '</th>';
+            //日曜日
         }else if(_day.getDay() == 0){
             contant += '<tr class="sun_day">';
+            contant += '<th class="before_sv_cell sticky_col sun_day_text">' + key + '</th>';
         //土曜日
         }else if(_day.getDay() == 6){
             contant += '<tr class="sat_day">';
+            contant += '<th class="before_sv_cell sticky_col sat_day_text">' + key + '</th>';
         }else{
             contant += '<tr>';
+            contant += '<th class="before_sv_cell sticky_col">' + key + '</th>';
         }
-
+        
         //contant += '<tr>';
         //日付
-        contant += '<th class="sv_shift_date_cell">' + key + '</th>';
+        //contant += '<th class="before_sv_cell sticky_col">' + key + '</th>';
         //console.log(shift_data_ary[key]);
         Object.keys(shift_data_ary[key]).forEach(function(key2) {
 
@@ -365,6 +376,12 @@ $(document).on("click","body", function() {
 
 //シフト編集（ダブルクリックで発火させる）
 $(document).on("dblclick","[id^=shift_cell_]", function() {
+
+    //管理者権限のみ編集可能
+    if($("#user_authority").val() != 9){
+        return false;
+    }
+
     //表示モード（0：テキスト表示 1：セレクトボックス表示）
     var disp_mode = $(this).attr('data-disp-mode');
     if(disp_mode == 1){
@@ -389,7 +406,8 @@ $(document).on("dblclick","[id^=shift_cell_]", function() {
         return false;
     }
 
-    //console.log(current_shift_num);
+    //console.log(user_id);
+    //console.log(shift_date);
     //セレクトボックスのidを再設定
     var replace_text = 'id="tdbs_shift_time_' + user_id + '_' + shift_date + '"';
     var shift_select_html_after = shift_select_html.replace('id="tdbs_shift_time"' , replace_text);

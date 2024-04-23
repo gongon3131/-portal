@@ -65,12 +65,12 @@
 
 				<div class="table-responsive">
 					<div class="table_box_sv_shift">
-						<table class="table table-condensed table-sm table-hover table-bordered sv-shift">
+						<table class="table table-condensed table-sm table-hover table-bordered sv-shift sticky_table">
 							<thead class="thead-dark">
 								<tr>
-									<th class="before_sv_cell_date sticky_cross">日付</td>
+									<th class="before_sv_cell_date sticky_row">日付</td>
 									{foreach from=$sv_user_ary item=val key=keyname }
-									<th class="before_sv_cell sticky_col" id="header_{$val.tmur_user_id}" data-header-userid="{$val.tmur_user_id}" data-toggle="modal" data-target="#hope_shift_detail" data-backdrop="static" data-target-username="{$val.tmur_user_name}" data-target-userid="{$val.tmur_user_id}" >{$val.tmur_user_id}<br>{$val.tmur_user_name}</th>
+									<th class="before_sv_cell sticky_col sv_name_text" id="header_{$val.tmur_user_id}" data-header-userid="{$val.tmur_user_id}" data-toggle="modal" data-target="#hope_shift_detail" data-backdrop="static" data-target-username="{$val.tmur_user_name}" data-target-userid="{$val.tmur_user_id}" >{$val.tmur_user_id}<br>{$val.tmur_user_name}</th>
 									<input type="hidden" id="holiday_manage_{$val.tmur_user_id}" value="{$val.tmur_holiday_manage}">
 									{/foreach}
 								</tr>

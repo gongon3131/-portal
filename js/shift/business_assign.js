@@ -1010,7 +1010,8 @@ $(document).on("click","#cell_paste", function() {
         $("#op-col" + zeroPadding(target_hour,2) + "_" + terget_opid).text(copy_free_des);
         $("#op-col" + zeroPadding(target_hour,2) + "_" + terget_opid).attr("data-free-des",copy_free_des);
         $("#op-col" + zeroPadding(target_hour,2) + "_" + terget_opid).css('font-size','15px');
-}
+    }
+    
     //業務番号がコピーされているときは、当該業務の色をセット
     if(copy_rest_flg == 0 && copy_training_flg == 0){
         if(copy_data != ""){

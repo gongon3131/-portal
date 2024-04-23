@@ -236,13 +236,6 @@ class SY_App extends SY_Framework{
 
     }
 
-    function get_company_holiday($start_date,$end_date){
-
-        
-
-
-    }
-
     function get_schedule_holiday($start_date,$end_date){
 
         $holiday_ary = Array();

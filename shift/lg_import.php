@@ -115,7 +115,7 @@ class SY_App extends SY_Framework{
 
                 }// end of while()
 
-                ChromePhp::log($all_color_ary);
+                //ChromePhp::log($all_color_ary);
 
                 try{
 

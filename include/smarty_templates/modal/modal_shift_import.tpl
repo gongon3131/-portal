@@ -13,25 +13,25 @@
         <table class="table table-striped table-condensed table-sm table-hover hope_shift_section">
           <thead class="thead-dark">
             <tr>
-              <th class="center-block w15">種別</th>
-              <th class="center-block w55">出力期間</th>
-              <th class="center-block w15">出力</th>
+              <th class="center-block w15">区分</th>
+              <th class="center-block w60">出力期間</th>
+              <th class="center-block w10">出力</th>
               <th class="center-block w15">ダウンロード</th>
             </tr>
             {foreach from=$import_kbn item=val key=business_no }
               <tr>
-                <td>{$val}</td>
+                <td class="center-block">{$val}</td>
                 <td>
                   <div class="form-inline">
-                    <input id="import_date_from{$business_no}" type="date" class="form-control ml-5 mr-2 date_pk" name="import_date_from{$business_no}" value=""  />
+                    <input id="import_date_from{$business_no}" type="date" class="form-control mr-2 date_pk" name="import_date_from{$business_no}" value=""  />
                     ～
-                    <input id="import_date_to{$business_no}" type="date" class="form-control ml-5 mr-2 date_pk" name="import_date_to{$business_no}" value=""  />
+                    <input id="import_date_to{$business_no}" type="date" class="form-control ml-2 mr-2 date_pk" name="import_date_to{$business_no}" value=""  />
                   </div>
                 </td>
-                <td>
+                <td class="center-block">
                   <button type="button" class="btn btn-primary ml-3 import_exec" data-bcno="{$business_no}">出力</button>
                 </td>
-                <td>
+                <td class="center-block">
                 <a id="import_link" href=""><button type="button" class="btn btn-primary ml-3 import_download" id="btn_bno_{$business_no}" data-dl-bcno="{$business_no}" disabled>ダウンロード</button></a>
                 </td>                
               </tr>

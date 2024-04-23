@@ -176,6 +176,7 @@ class SY_App extends SY_Framework{
         //業務色分け情報をjsから取得
         $json = $_POST['business_assign_ary'];
         $business_assign_ary = json_decode($json,true);
+        //ChromePhp::log("business_assign_ary");
         //ChromePhp::log($business_assign_ary);
 
         //業務別人数情報をjsから取得

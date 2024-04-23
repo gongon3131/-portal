@@ -49,7 +49,8 @@ $(document).on("click",".import_exec", function() {
             if(json_data == "ok"){
 
                 var file_name = "http://192.168.4.233/new_portal/shift/import_download.php?target_filename=" + dateStr_from + "-" + dateStr_to + "_bno_" + business_no + ".xlsx";
-                $("#import_link").attr('href',file_name);
+                console.log(file_name);
+                $("a#import_link").attr('href',file_name);
                 //ボタンの非活性を解除する
                 $("#btn_bno_" + business_no).prop("disabled", false);
 
@@ -83,5 +84,14 @@ $('#modal_shift_import').on('hidden.bs.modal', function () {
     $("[id^=import_date_from]").val("");
     $("[id^=import_date_to]").val("");
     $("[id^=btn_bno_]").prop("disabled", true);
+
+});
+
+//モーダル画面閉じる
+$('#modal_shift_import').on('shown.bs.modal', function () {
+
+    var today = get_today_date_ymd();
+    $("[id^=import_date_from]").val(today);
+    $("[id^=import_date_to]").val(today);
 
 });

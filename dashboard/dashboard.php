@@ -451,14 +451,14 @@ class SY_App extends SY_Framework{
                 }else{
                     //変更前
                     if(empty($shift_histry_ary['change_before']) == true){
-                        $shift_histry_ary['change_before'] =$shift['tdbc_start_time_second_old']."-".$shift['tdbc_end_time_second_old'];
+                        $shift_histry_ary['change_before'] = $shift['tdbc_start_time_second_old']."-".$shift['tdbc_end_time_second_old'];
                     }else{
                         $shift_histry_ary['change_before'] = $shift_histry_ary['change_before']."　".$shift['tdbc_start_time_second_old']."-".$shift['tdbc_end_time_second_old'];
                     }
                     //$shift_histry_ary['change_before'] = $shift_histry_ary['change_before']."　".$shift['tdbc_start_time_second_old']."-".$shift['tdbc_end_time_second_old'];
                     //変更後
                     if(empty($shift_histry_ary['change_after']) == true){
-                        $shift_histry_ary['change_after'] =$shift['tdbc_start_time_second_old']."-".$shift['tdbc_end_time_second_old'];
+                        $shift_histry_ary['change_after'] = $shift['tdbc_start_time_second_old']."-".$shift['tdbc_end_time_second_old'];
                     }else{
                         $shift_histry_ary['change_after'] = $shift_histry_ary['change_after']."　".$shift['tdbc_start_time_second_old']."-".$shift['tdbc_end_time_second_old'];
                     }
@@ -700,7 +700,7 @@ class SY_App extends SY_Framework{
                             $shift_histry_ary['change_after'] = $this->define['hope_shift_sv'][$shift['tdbs_shift_time']];
                         }
                     }
-
+                
                 }
 
                 //ChromePhp::log($shift_histry_ary);

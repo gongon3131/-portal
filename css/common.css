@@ -333,8 +333,20 @@ form {
   background-color: #87ceeb !important;
 }
 
+.sat_day_text{
+  color: #87ceeb !important;
+}
+
 .sun_day{
   background-color: #ff7f50 !important;
+}
+
+.sun_day_text{
+  color: #ff7f50 !important;
+}
+
+.sv_name_text{
+  color:#000 !important;
 }
 
 .sv_shift_date_cell{
@@ -567,11 +579,12 @@ div.fixed-box-yoko4 {
     left: 0;
     width: 100%;
     height: 100%;
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
-    background: #ccc;
+    /*border-top: 1px solid #000;
+    border-bottom: 1px solid #000;*/
+    background: #fffafa;
     z-index: -1;
   }
+  
   .sticky_cross {
     position: sticky;
     top: 0;
@@ -583,6 +596,7 @@ div.fixed-box-yoko4 {
     border-right: none;
     z-index: 1;
   }
+  
   .sticky_cross::before {
     content: "";
     position: absolute;
@@ -596,6 +610,22 @@ div.fixed-box-yoko4 {
     border-right: 1px solid #000;
     background: #ccc;
     z-index: -1;
+  }
+
+  .sticky_table thead th {
+    /* 縦スクロール時に固定する */
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    /* tbody内のセルより手前に表示する */
+    z-index: 1;
+  }
+
+  .sticky_table th:first-child {
+    /* 横スクロール時に固定する */
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
   }
 
 

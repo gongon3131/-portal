@@ -461,6 +461,11 @@ class SY_App extends SY_Framework{
             foreach($shift_data_ary as $key => $val){
                 //ChromePhp::log($val);  
                 foreach($val as $key2 => $val2){
+                    //最終更新日がブランクのときはスキップする
+                    //データ取得時点で最終更新日がブランク＝データが未登録の状態
+
+
+
                     $sql = "  SELECT tdsb_update_date FROM td_shift_business WHERE tdsb_user_id = :tdsb_user_id AND tdsb_shift_date = :tdsb_shift_date AND tdsb_shift_hour = :tdsb_shift_hour";
                     $sql .= " AND tdsb_update_date = :tdsb_update_date";
                     $stmt = $this->mysql->prepare($sql);
@@ -477,10 +482,22 @@ class SY_App extends SY_Framework{
                     
                     $row_count = $stmt->rowCount();
 
-                    if($row_count < 1){
-                        echo json_encode("conflict_ng");
-                        exit();
+                    if($val2['tdsb_update_date'] == ""){
+
+                        if($row_count > 0){
+                            echo json_encode("conflict_ng");
+                            exit();
+                        }
+                            
+                    }else{
+                        if($row_count < 1){
+                            echo json_encode("conflict_ng");
+                            exit();
+                        }
+    
                     }
+                    
+
                 }
 
             }
