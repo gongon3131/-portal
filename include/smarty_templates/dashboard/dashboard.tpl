@@ -9,6 +9,7 @@
 			<main role="main" class="col-md-9 col-lg-12 px-md-4">
 				<div class="form-inline">
 					<h3 class="section-title">ダッシュボード</h3>
+					<a href="{$base_url}pdf/OP_manual.pdf" target="_blank" style="width:80%;"><img src="{$base_url}img/manual.png" class="manual_icn"></a>
 				</div>
 				<input type="hidden" id="csrf_token" value="{$csrf_token}" />
 				<input type="hidden" value="{$smarty.session.login_info.user_id}" id="user_id">

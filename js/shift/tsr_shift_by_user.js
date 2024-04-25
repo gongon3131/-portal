@@ -16,6 +16,9 @@ $("#tmur_user_id").change(function(){
 
 function by_user_kensaku(){
 
+    //業務別カラーcss作成
+    init_business_color();
+
     //操作権限フラグ
     user_authority = $("#user_authority").val();
     //$("#user_authority").val("");
@@ -85,6 +88,57 @@ function by_user_kensaku(){
 	})	
     
 }
+
+//業務別カラーをcssへ登録する
+function init_business_color(){
+
+    //業務別カラーを取得
+	$.ajax({
+		type:          'post',
+		url:		   "../api/shift/business_assign_api.php", 
+		//受信データ形式（jsonもしくはtextを選択する)
+		//dataType:      'json',
+		//contentType:   'application/json',
+        async:false,
+		scriptCharset: 'utf-8',
+		data:          {
+						'action'	      : 'get_business_color'
+						},
+		
+		// 200 OK
+		success: function(json_data) {   
+            //console.log(json_data);
+            business_color_ary = json_data;
+            var style = document.createElement("style");
+            document.head.appendChild( style );
+        
+            var sheet = style.sheet;
+
+            Object.keys(json_data).forEach(function(key) {
+                var css_str = "";
+                css_str += '.business_color' + json_data[key]['tmbc_business_id'] + ' {';
+                css_str += 'background-color: ' + json_data[key]['tmbc_color_code'] + ';}';
+                sheet.insertRule( css_str, key );
+            })
+
+		},
+
+		// HTTPエラー
+		error: function(XMLHttpRequest, textStatus, errorThrown) {         
+			alert("エラーが発生しました。システム管理者にお問い合わせください。");
+			console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+			console.log("textStatus     : " + textStatus);
+			console.log("errorThrown    : " + errorThrown.message);	
+		},
+
+		// 成功・失敗に関わらず通信が終了した際の処理
+		complete: function() {     
+		}
+	})
+
+}
+
+
 
 function paging_form(){
 
@@ -428,6 +482,7 @@ function set_shift_color(start_time,end_time,target_id){
     }
 
 }
+
 
 //シフト色切り替え
 $(document).on("dblclick","[id^=op-col]", function() {
@@ -943,6 +998,12 @@ $(document).on("click",".shift_by_user_gh", function() {
 });
 
 $(document).on("click",".shift_by_user_fm", function() {
+
+    if($("#user_authority").val() == 1){
+        return false;
+
+    }
+
     var showen_date =  $(this).data('target-date-fm');
     
     var section_sta = $("#section_sta").val();

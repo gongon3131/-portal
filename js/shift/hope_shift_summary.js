@@ -85,12 +85,15 @@ function paging(){
             contant += '<td class="hope_shift_summary_cell1"></td>';
             contant += '<td class="hope_shift_summary_cell1"><button type="button" class="btn btn-success hope_shift_regist" data-userid="' + json[key]['tmur_user_id'] + '" data-target="1">登録</button></td>';
             contant += '<td class="hope_shift_summary_cell1"></td>';
+            contant += '<td class="hope_shift_summary_cell1"></td>';
+
         }else{
             contant += '<td class="hope_shift_summary_cell1">' + json[key]['tdsh_update_date'] + '</td>';
             contant += '<td class="hope_shift_summary_cell1"><button type="button" data-toggle="modal" data-target="#hope_shift_detail" data-backdrop="static" data-target-username="' + json[key]['tmur_user_name'] + '" data-target-userid="' + json[key]['tmur_user_id'] + '" class="btn btn-primary" id="hope_shift_detail' + json[key]['tmur_user_id'] +'">詳細</button></td>';
             contant += '<td class="hope_shift_summary_cell1"><button type="button" class="btn btn-success hope_shift_regist" data-userid="' + json[key]['tmur_user_id'] + '" data-target="1">修正</button></td>';
             contant += '<td class="hope_shift_summary_cell1"><button type="button" class="btn btn-info hope_shift_reflection" data-userid="' + json[key]['tmur_user_id'] + '">反映</button></td>';
-        }
+            contant += '<td class="hope_shift_summary_cell1">' + json[key]['tdsh_last_reflection_date'] + '</td>';
+		}
         contant += '</tr>';
     })					
 
@@ -175,6 +178,7 @@ $(document).on("click",".hope_shift_reflection", function() {
 			//登録成功
 			if(json_data == "ok"){
 				alert("確定前シフト表に反映されました");
+				location.reload();
 			//登録失敗
 			}else if(json_data == "ng"){
 				alert("反映に失敗しました");

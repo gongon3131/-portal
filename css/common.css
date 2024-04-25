@@ -188,6 +188,11 @@ form {
   border-bottom: 1px dotted #8c8c8c;
 }
 
+.manual_icn{
+  width:5%;
+  margin: 0 0 0 auto;
+}
+
 /*************ラベル関連*****************/
 
 /*マージン*/
@@ -391,7 +396,7 @@ form {
 }
 
 .shift_form_text_hope{
-    font-size:0.98em !important;
+    font-size:0.95em !important;
 }
 
 /* メモアイコン */

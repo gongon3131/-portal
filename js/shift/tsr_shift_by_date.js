@@ -934,6 +934,7 @@ $('#shift_by_date_memo_regist').on('hidden.bs.modal', function (event) {
 
 //氏名リンク押下
 $(document).on("click",".shift_by_user", function() {
+
     var tmur_user_id =  $(this).data('userid');
     var section_sta = $("#section_sta").val();
     var section_end = $("#section_end").val();

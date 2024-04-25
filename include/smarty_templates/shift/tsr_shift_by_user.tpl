@@ -49,8 +49,8 @@
 								<thead class="thead-dark">
 									<tr>
 										<th class="center-block w10">日付</th>
-										<th class="center-block w25">第1希望</th>
-										<th class="center-block w25">第2希望</th>
+										<th class="center-block w25">第1区間</th>
+										<th class="center-block w25">第2区間</th>
 										<th class="center-block w5">夜勤</th>
 										<th class="center-block w5">休日</th>
 										<th class="center-block w5">有休</th>

@@ -456,6 +456,11 @@ class SY_App extends SY_Framework{
             $ageArray = array_column($shift_detail, 'tdbc_shift_date');
             array_multisort($ageArray, SORT_ASC, $shift_detail);
 
+            //業務情報の取得
+            $business_info_ary = $this->get_sihft_business($this->vars['section_sta'],$this->vars['section_end'],$this->vars['tmur_user_id']);
+            ChromePhp::log($business_info_ary);
+            $shift_detail['business_info'] = $business_info_ary;
+
             ChromePhp::log($shift_detail);
             echo json_encode($shift_detail);
 
@@ -1487,6 +1492,73 @@ class SY_App extends SY_Framework{
             ChromePhp::log($e);
             return "";
         }
+
+    }
+
+    function get_sihft_business($tdsb_shift_date_sta,$tdsb_shift_date_end,$tdsb_user_id){
+
+        $roop_start_date = new Datetime($tdsb_shift_date_sta);
+        $start_date_origin = $roop_start_date;
+        $roop_end_date = new Datetime($tdsb_shift_date_end);
+
+        $business_data_ary = Array();
+
+        while ($roop_start_date <= $roop_end_date) {
+            $current_date =  $roop_start_date->format('Y-m-d');
+
+            try{
+                $sql = <<<EOF
+                    SELECT
+                    tdsb_shift_date,
+                    tdsb_user_id,
+                    tdsb_shift_hour,
+                    tdsb_business_id,
+                    tdsb_free_description,
+                    tdsb_rest_flg,
+                    tdsb_training_flg
+                    FROM td_shift_business
+                    WHERE tdsb_shift_date = :current_date
+                    AND tdsb_user_id = :tdsb_user_id
+                EOF;
+                $stmt = $this->mysql->prepare($sql);
+    
+                $stmt->bindParam(":current_date" , $current_date);
+                $stmt->bindParam(":tdsb_user_id" , $tdsb_user_id);
+    
+                //クエリ実行
+                $execute = $stmt->execute();
+                // DEBUG OUTPUT
+                //ChromePhp::log($this->db->pdo_debugStrParams($stmt));
+    
+                $w_ary = Array();
+    
+                while($shift = $stmt->fetch()){
+    
+                    $w_ary[] = $shift;
+                    /*
+                    $w_ary['shift_date'] = $shift['tdsb_shift_date'];
+                    $w_ary['user_id'] = $shift['tdsb_user_id'];
+                    $w_ary['business_id'] = $shift['tdsb_business_id'];
+                    $w_ary['free_description'] = $shift['tdsb_free_description'];
+                    $w_ary['rest_flg'] = $shift['tdsb_rest_flg'];
+                    $w_ary['training_flg'] = $shift['tdsb_training_flg'];
+                    */
+
+                }
+                //if(empty($w_ary) == false){
+                    $business_data_ary[$current_date] = $w_ary;
+                //}
+    
+    
+            } catch(Exception $e) {
+                ChromePhp::log($e);
+                return "";
+            }
+    
+            $roop_start_date->modify('+1 day');
+        }
+
+        return $business_data_ary;
 
     }
 

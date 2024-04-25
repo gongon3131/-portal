@@ -6,7 +6,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<!--メインコンテンツ-->
-			<main role="main" class="col-md-9 px-md-4">
+			<main role="main" class="col-md-12 px-md-4">
 				<div class="form-inline ml-3 mb-3">
 					{if $section_sta == "" && $section_end == ""}
 						{if $target == 1}						
@@ -34,13 +34,14 @@
 						<table class="table table-striped table-condensed table-sm table-hover hope_shift_summary">
 							<thead class="thead-dark">
 								<tr>
-									<th class="center-block w10">ID</th>
-									<th class="center-block w30">氏名</th>
+									<th class="center-block w5">ID</th>
+									<th class="center-block w15">氏名</th>
 									<th class="center-block w10">登録状況</th>
 									<th class="center-block w20">最終更新日時</th>
 									<th class="center-block w10">詳細</th>
 									<th class="center-block w10">登録</th>
 									<th class="center-block w10">反映</th>
+									<th class="center-block w20">最終反映日時</th>
 								</tr>
 							</thead>
 							<tbody id="maintable"></tbody>

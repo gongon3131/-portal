@@ -346,6 +346,7 @@ class SY_App extends SY_Framework{
                     CASE 
                     WHEN tdsh_shift_date IS NULL THEN 0
                     ELSE 1 END AS tdsh_shift_date,
+                    IFNULL(tdsh_last_reflection_date,"") AS tdsh_last_reflection_date,
                     tdsh_update_date
                     FROM
                     (
@@ -355,11 +356,12 @@ class SY_App extends SY_Framework{
                     tmu.tmur_authority AS tmur_authority,
                     tmu.tmur_is_used AS tmur_is_used,
                     cw1.tdsh_shift_date AS tdsh_shift_date,
+                    cw1.tdsh_last_reflection_date AS tdsh_last_reflection_date,
                     cw1.tdsh_update_date AS tdsh_update_date
                     FROM tm_user AS tmu
                     LEFT OUTER JOIN
                     (
-                    SELECT tdsh_user_id , tdsh_shift_date , tdsh_update_date FROM td_hope_shift
+                    SELECT tdsh_user_id , tdsh_shift_date , tdsh_update_date , tdsh_last_reflection_date FROM td_hope_shift
                     WHERE tdsh_shift_date >= :section_sta
                     AND tdsh_shift_date <= :section_end
                     ) AS cw1
@@ -876,6 +878,25 @@ class SY_App extends SY_Framework{
             //クエリ実行
             $execute = $stmt->execute();
             // DEBUG OUTPUT
+            //ChromePhp::log($this->db->pdo_debugStrParams($stmt));            
+
+            //最終反映日時の挿入
+            $sql = " UPDATE td_hope_shift SET tdsh_last_reflection_date = :tdsh_last_reflection_date WHERE tdsh_user_id = :tdsh_user_id ";
+            $sql .= " AND tdsh_shift_date >= :section_sta";
+            $sql .= " AND tdsh_shift_date <= :section_end";
+
+            $stmt = $this->mysql->prepare($sql);
+            $today = date("Y-m-d H:i:s");
+
+            $stmt->bindParam(":tdsh_user_id" , $this->vars['tmur_user_id']);
+            $stmt->bindParam(":section_sta" , $this->vars['section_sta']);
+            $stmt->bindParam(":section_end" , $this->vars['section_end']);
+            $stmt->bindParam(":tdsh_last_reflection_date" , $today);   
+            
+            //クエリ実行
+            $execute = $stmt->execute();
+
+            // DEBUG OUTPUT
             //ChromePhp::log($this->db->pdo_debugStrParams($stmt));
             
             //トランザクションコミット
@@ -1058,6 +1079,7 @@ class SY_App extends SY_Framework{
                     tdsh_midnight_flg,
                     tdsh_start_time_second,
                     tdsh_memo,
+                    IFNULL(tdsh_last_reflection_date,'') AS tdsh_last_reflection_date,
                     tdsh_update_date
                     FROM td_hope_shift
                     WHERE tdsh_user_id = :tdsh_user_id
@@ -1102,7 +1124,6 @@ class SY_App extends SY_Framework{
                 //hidden保存用
                 $w_ary['section_sta'] = $section_data['tshs_start_date'];
                 $w_ary['section_end'] = $section_data['tshs_end_date'];
-
 
                 $personal_summary_ary[] = $w_ary;
 

@@ -390,11 +390,16 @@ function set_tsr_shift_for_graph_by_user(){
             current_section_date = date_s.setDate(date_s.getDate() + 1);
             
             return;
+
         }else{
             //第2区間がセットされていなければ、第1区間の情報のみグラフ表示
             if(start_time_second == "" || end_time_second == ""){
 
                 set_shift_color(start_time_first,end_time_first,current_section_date,shift_data_ary[key]['user_type']);
+                //業務カラーのセット
+                if(shift_data_ary['business_info'][current_section_date] !== undefined){
+                    ser_business_color(shift_data_ary['business_info'][current_section_date]);
+                }
 
                 //次の日付へ移動
                 current_section_date = date_s.setDate(date_s.getDate() + 1);
@@ -406,6 +411,11 @@ function set_tsr_shift_for_graph_by_user(){
                 set_shift_color(start_time_first,end_time_first,current_section_date,shift_data_ary[key]['user_type']);
                 //第2区間のセット
                 set_shift_color(start_time_second,end_time_second,current_section_date,shift_data_ary[key]['user_type']);
+                //業務カラーのセット
+                if(shift_data_ary['business_info'][current_section_date] !== undefined){
+                    ser_business_color(shift_data_ary['business_info'][current_section_date]);
+                }
+
                 //次の日付へ移動
                 current_section_date = date_s.setDate(date_s.getDate() + 1);
                 
@@ -418,6 +428,26 @@ function set_tsr_shift_for_graph_by_user(){
     })//end of foreach()
 
 }
+
+function ser_business_color(business_info){
+
+    Object.keys(business_info).forEach(function(key) {
+        var start_hour = business_info[key]['tdsb_shift_hour'];
+        var target_date = business_info[key]['tdsb_shift_date'];
+        var business_id = business_info[key]['tdsb_business_id'];
+        //console.log(target_date);
+        //console.log(start_hour);
+        //console.log(business_id);
+        $("#op-col" + zeroPadding(start_hour,2) + "_" + target_date).removeClass();
+        $("#op-col" + zeroPadding(start_hour,2) + "_" + target_date).addClass('bc_text');
+        $("#op-col" + zeroPadding(start_hour,2) + "_" + target_date).addClass("business_color" + business_id);
+        $("#op-col" + zeroPadding(start_hour,2) + "_" + target_date).text(business_info[key]['tdsb_business_id']);
+
+
+    })//end of foreach()
+
+}
+
 
 function set_form_by_user(){
     //console.log(shift_data_ary);

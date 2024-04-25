@@ -11,6 +11,7 @@
 			</li>
 		</ul>		
 		<ul class="navbar-nav">
+			<!--
 			<li class="nav-item dropdown ml-3">
 				<a class="nav-link dropdown-toggle nav-menu-font" href="#" id="navbarDropdownMenu_uriage" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					伝達掲示板
@@ -19,6 +20,7 @@
 					<a class="dropdown-item" href="{$base_url}board/contents_summary.php">新着記事一覧</a>
 				</div>
 			</li>
+			-->
 			<li class="nav-item dropdown ml-3">
 				<a class="nav-link dropdown-toggle nav-menu-font" href="#" id="navbarDropdownMenu_uriage" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					シフト希望管理
@@ -74,6 +76,7 @@
 					</div>
 				</li>
 			{/if}
+
 		</ul>
 		<ul class="navbar-nav">
 			<li class="nav-item ml-3">

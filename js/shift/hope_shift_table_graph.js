@@ -473,9 +473,10 @@ function chk_section(){
 $(document).on("click","#hope_shift_memo_regist", function() {
 
     var target_date = $("#hope_shift_memo_target_date").val();
-
+    //var target_date = $("#hope_shift_memo_").val();
     //入力されたメモ情報を取得
     var memo = $("#hs_memo").val();
+    console.log(memo);
     $("#hope_shift_memo_" + target_date).val(memo);
 
     //メモ情報が空白ならアイコンを非表示
