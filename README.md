@@ -8,11 +8,11 @@ ID：59997／PASS：59997
 
 SV用テストユーザー
 
-ID：test2／PASS：test
+ID：59998 ／PASS：59998
 
 一般OP用	テストユーザー
 
-ID：test3／PASS：test	
+ID：59997／PASS：59997	
 
 【SSH接続情報】
 
