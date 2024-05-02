@@ -65,6 +65,7 @@ $SY_define['hope_shift_sv'][20]="休み";
 $SY_define['hope_shift_sv'][30]="有休";
 $SY_define['hope_shift_sv'][1]="8-16";
 $SY_define['hope_shift_sv'][2]="8-17";
+$SY_define['hope_shift_sv'][13]="9-14";
 $SY_define['hope_shift_sv'][3]="9-17";
 $SY_define['hope_shift_sv'][4]="9-18";
 $SY_define['hope_shift_sv'][5]="10-19";

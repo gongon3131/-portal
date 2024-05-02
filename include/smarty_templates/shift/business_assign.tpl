@@ -13,8 +13,12 @@
 					{if $smarty.session.login_info.user_authority != 1}
 						<button type="button" class="btn btn-primary ml-3" id="business_color_regist">登録</button>
 						<button type="button" class="btn btn-primary ml-3" data-toggle="modal" data-target="#business_category_edit_modal" data-backdrop="static" id="business_category_edit">業務編集</button>
-						<button type="button" class="btn btn-primary ml-3" data-toggle="modal" data-target="#lg_import_modal" data-backdrop="static" id="lg_import">自治体シフト</button>
-
+						<button type="button" class="btn btn-primary ml-3" data-toggle="modal" data-target="#lg_import_modal" data-backdrop="static" id="lg_import">シフトインポート</button>
+						<div class="form-check ml-3">
+							<input class="form-check-input" type="checkbox" id="total_area_show">
+							<label class="form-check-label" for="check1a">合計人数非表示</label>
+						</div>
+					  
 					{/if}
 				</div>
 				<input type="hidden" value="{$smarty.session.login_info.user_id}" id="user_id">
@@ -40,7 +44,7 @@
 					</ul>
 				</div>
 				<div class="table-responsive">
-					<div class="fixed-box-yoko4">
+					<div class="fixed-box-yoko4 total_area">
 						<table class="table table-condensed table-sm table-hover table-bordered">
 							<thead class="thead-dark">
 								<tr>

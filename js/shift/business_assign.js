@@ -145,7 +145,7 @@ function paging_graph(){
     //合計人数表示"business_color" + input_val
     Object.keys(business_color_ary).forEach(function(key2) {
         contant += '<tr class="by_date_shift_height">';
-        contant += '<td class="form_v_middle business_color' + business_color_ary[key2]['tmbc_business_id'] + '">' + business_color_ary[key2]['tmbc_business_name'] + ' 合計</td>';
+        contant += '<td class="form_v_middle business_color' + business_color_ary[key2]['tmbc_business_id'] + '" data-bcno="' + business_color_ary[key2]['tmbc_business_id'] + '" id="selected_color_' + business_color_ary[key2]['tmbc_business_id'] + '">' + business_color_ary[key2]['tmbc_business_name'] + ' 合計</td>';
         contant += '<td id="total_00_bno_' + business_color_ary[key2]['tmbc_business_id'] + '" class="by_date_shift_total_cell"></td>';
         contant += '<td id="total_01_bno_' + business_color_ary[key2]['tmbc_business_id'] + '" class="by_date_shift_total_cell"></td>';
         contant += '<td id="total_02_bno_' + business_color_ary[key2]['tmbc_business_id'] + '" class="by_date_shift_total_cell"></td>';
@@ -227,6 +227,42 @@ $(document).on("click","#lg_import", function() {
 });
 */
 
+//合計人数非表示処理
+$("#total_area_show").on('change', function(){
+
+    //非表示にチェック
+    if($(this).prop('checked')){
+        $(".total_area").css('display','none');
+    }else{
+        $(".total_area").css('display','block');
+    }
+
+});
+
+$(document).on("click","[id^=op-col]", function(e){
+
+    var target_hour = $(this).attr("data-hour");
+    var target_opid = $(this).attr("data-opid");
+    //console.log(target_hour);
+	//console.log(target_opid);
+    console.log(/(^|\s)business_color\S*/g.test($(this).prop('class')));
+
+
+    if(/(^|\s)business_color\S*/g.test($(this).prop('class')) == true){
+        console.log("色付きセル");
+
+    }
+
+
+})
+
+$("[id^=selected_color_]").on('click', function(){
+
+    console.log("hoge");
+
+});
+
+
 //contenteditable改行禁止処理
 $(document).on("input keydown keyup keypress change","[id^=op-col]", function(e){
 //$(document).on("input  keyup  change","[id^=op-col]", function(e){
@@ -247,6 +283,7 @@ $(document).on("input keydown keyup keypress change","[id^=op-col]", function(e)
     //全角文字の入力を禁止
     if (e.which == 229) {
         $(this).text(before_data);
+        $(this).text("");
         return false;
     }
 
@@ -263,6 +300,16 @@ $(document).on("input keydown keyup keypress change","[id^=op-col]", function(e)
     var txt = $(this).text();
     var replace2 = txt.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'');
     $(this).text(replace2);
+
+    //キャレットを文末に移動させる
+    const selection = window.getSelection();
+    const range = document.createRange();
+    const offset = this.innerText.length;
+    range.setStart(this.firstChild, offset);
+    range.setEnd(this.firstChild, offset);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
 
 })
 
@@ -292,6 +339,9 @@ function set_graph_by_date(){
         if(yesterday_midnight_flg == 1){
             for (let i = 0; i < 8; i++){
                 $("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).addClass("op_shift_1");
+                $("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).addClass("business_color0");
+                $("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).text("0");      
+                $("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).attr("data-bcno",0);      
                 $("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).attr("contenteditable","true");
             }
         }
@@ -323,6 +373,9 @@ function set_graph_by_date(){
         if(midnight == true){
             for (let i = 22; i < 24; i++){
                 $("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).addClass("op_shift_1");
+                $("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).addClass("business_color0");
+                $("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).text("0");
+                $("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).attr("data-bcno",0);  
                 $("#op-col" + zeroPadding(i,2) + "_" + shift_data_ary[key]['tdbc_user_id']).attr("contenteditable","true");
             }
 			$("#graph_midnight_set_" + shift_data_ary[key]['tdbc_user_id']).val(1);
@@ -367,6 +420,9 @@ function set_shift_color(start_time,end_time,target_id){
 
         for (let i = start_hour; i < end_hour; i++){
             $("#op-col" + zeroPadding(i,2) + "_" + target_id).addClass("op_shift_1");
+            $("#op-col" + zeroPadding(i,2) + "_" + target_id).addClass("business_color0");
+            $("#op-col" + zeroPadding(i,2) + "_" + target_id).text("0");
+            $("#op-col" + zeroPadding(i,2) + "_" + target_id).attr("data-bcno",0);  
             $("#op-col" + zeroPadding(i,2) + "_" + target_id).attr("contenteditable","true");
         }
 
@@ -424,7 +480,7 @@ function set_business_color(){
                 Object.keys(business_assign_ary).forEach(function(key) {
 
                     var w_bisiness_ary = json_data[key];
-                    //console.log(w_bisiness_ary);
+                    console.log(w_bisiness_ary);
 
                     Object.keys(w_bisiness_ary).forEach(function(key2) {
                         
@@ -437,9 +493,21 @@ function set_business_color(){
                                     //クラス名を見て、色付き（黄色）のセルは優先業務の色をセットする
                                     var class_name = $("#op-col" + zeroPadding(i,2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).attr("class");
                                     if(class_name.indexOf('op_shift_1') > -1){
-                                        $("#op-col" + zeroPadding(i,2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).addClass("business_color" + w_bisiness_ary[key2]['business_enable_priority']);  
-                                        $("#op-col" + zeroPadding(i,2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).attr('data-bcno',w_bisiness_ary[key2]['business_enable_priority']);       
-                                        $("#op-col" + zeroPadding(i,2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).text(w_bisiness_ary[key2]['business_enable_priority']);       
+
+                                        //優先業務が設定されているとき
+                                        if(w_bisiness_ary[key2]['business_enable_priority'] != ""){
+                                            $("#op-col" + zeroPadding(i,2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).addClass("business_color" + w_bisiness_ary[key2]['business_enable_priority']);  
+                                            $("#op-col" + zeroPadding(i,2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).attr('data-bcno',w_bisiness_ary[key2]['business_enable_priority']);       
+                                            $("#op-col" + zeroPadding(i,2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).text(w_bisiness_ary[key2]['business_enable_priority']);          
+                                        //優先業務が設定されていないとき
+                                        }else{
+                                            //色は業務未設定の色にする（0）
+                                            $("#op-col" + zeroPadding(i,2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).addClass("business_color0" );  
+                                            $("#op-col" + zeroPadding(i,2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).attr('data-bcno',0);       
+                                            $("#op-col" + zeroPadding(i,2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).text(0);       
+    
+                                        }
+
                                     }
 
                                 }
@@ -450,6 +518,10 @@ function set_business_color(){
 
                         //色情報が保存されているとき
                         }else{
+
+                            //色付けセルになっているかの判定
+                            //console.log(w_bisiness_ary[key2]['tdsb_user_id']);
+                            //console.log($("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).hasClass("[class$='business_color']"));
 
                             //休憩フラグのとき
                             if(w_bisiness_ary[key2]['tdsb_rest_flg'] == 1){
@@ -468,7 +540,14 @@ function set_business_color(){
                                 $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).text("研修");  
                                 //セルに色をつける
                                 $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).removeClass("op_shift_1");  
-                                $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).addClass("business_color" + w_bisiness_ary[key2]['tdsb_business_id']);  
+                                if(w_bisiness_ary[key2]['tdsb_business_id'] != ""){
+                                    $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).addClass("business_color" + w_bisiness_ary[key2]['tdsb_business_id']);  
+                                }else{
+                                    $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).removeClass();
+                                    $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).addClass("bc_text");
+                                    $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).addClass("op_shift_1");
+                                }
+                                //$("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).addClass("business_color" + w_bisiness_ary[key2]['tdsb_business_id']);  
                                 $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).attr('data-bcno',w_bisiness_ary[key2]['tdsb_business_id']);       
                                 $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).attr("data-training-flg",1);
                                 $("#op-col" + zeroPadding(w_bisiness_ary[key2]['tdsb_shift_hour'],2) + "_" + w_bisiness_ary[key2]['tdsb_user_id']).css('font-size','15px');
@@ -1108,7 +1187,8 @@ $(document).on("click","#business_color_regist", function() {
                 }
 
                 //if ( class_name.indexOf('business_color') != -1 || rest_flg == 1) {
-                if ( class_name.indexOf('business_color') != -1 || rest_flg == 1) {
+                if ( class_name.indexOf('business_color') != -1 || rest_flg == 1 || training_flg == 1) {
+                    
                     let brank_ary = new Object();
                     brank_ary['tdsb_user_id'] = "";
                     brank_ary['tdsb_user_name'] = "";
@@ -1126,7 +1206,8 @@ $(document).on("click","#business_color_regist", function() {
                     brank_ary['tdsb_free_description'] = free_description;
 
                     if(rest_flg == 1){
-                        brank_ary['tdsb_business_id'] = 0;
+                        //brank_ary['tdsb_business_id'] = 0;
+                        brank_ary['tdsb_business_id'] = "";
                     }else{
                         brank_ary['tdsb_business_id'] = business_no;
                     }

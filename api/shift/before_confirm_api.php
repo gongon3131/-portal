@@ -777,11 +777,11 @@ class SY_App extends SY_Framework{
             foreach($shift_data_ary as $key => $val){
                 if($val['confirm_check'] == 1){
                     $date_key = date('Ymd',  strtotime($val['tdbc_shift_date']));
-                    $sql .= " tdbc_shift_date = :tdbc_shift_date".$date_key.",";
+                    $sql .= " tdbc_shift_date = :tdbc_shift_date".$date_key." OR";
                 }
             }
 
-            $sql = rtrim($sql, ",");
+            $sql = rtrim($sql, "OR");
             $stmt = $this->mysql->prepare($sql);
 
             foreach($shift_data_ary as $key => $val){
@@ -790,14 +790,14 @@ class SY_App extends SY_Framework{
                     $stmt->bindValue(":tdbc_shift_date".$date_key , $val['tdbc_shift_date']);
                 }
             }
-
+            //ChromePhp::log($sql); 
             //クエリ実行
             $execute = $stmt->execute();
             // DEBUG OUTPUT
             //ChromePhp::log($this->db->pdo_debugStrParams($stmt)); 
 
             //操作ログ
-            $this->rec_operation_log($_SESSION['login_info']['user_id'],'確定前シフト','OPシフト','シフト公開');
+            $this->rec_operation_log($_SESSION['login_info']['user_id'],'確定前シフト','OPシフト','シフト公開','');
             
             //トランザクションコミット
             $this->mysql->commit();

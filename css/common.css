@@ -468,18 +468,18 @@ form {
     font-size: 18px;
 
 }
-.business_color_summary_cell2
-{
+.business_color_summary_cell2{
     text-align: left !important;
     vertical-align: middle !important;
     font-size: 18px;
 }
-.bc_text
-{
+.bc_text{
     text-align: center !important;
     vertical-align: middle !important;
     font-size: 20px;
-
+}
+#total_area_show{
+  transform:scale(1.5);
 }
 
 /*ユーザー登録画面*/

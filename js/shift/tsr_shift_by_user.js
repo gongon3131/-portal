@@ -1306,3 +1306,56 @@ $(document).on("click","#tsr_shift_regist", function() {
 	})	
     
 });
+
+//
+$(document).on("click","#show_usage_list", function() {
+
+	$.ajax({
+		type:          'post',
+		url:		   "../api/shift/business_assign_api.php", 
+		//受信データ形式（jsonもしくはtextを選択する)
+		//dataType:      'json',
+		//contentType:   'application/json',
+		scriptCharset: 'utf-8',
+		data:          {
+						'action'	  : 'get_business_color'
+						},
+		
+		// 200 OK
+		success: function(json_data) {   
+
+			if(json_data == "ng"){
+                alert("エラーが発生しました。システム管理者にお問い合わせください。");
+			}else{
+                var contant = "";
+                $('#maintable_usage_guide').empty();
+
+                Object.keys(json_data).forEach(function(key) {
+                    contant += '<tr>';
+                    contant += '<td>' + json_data[key]['tmbc_business_id'] + '</td>';
+                    contant += '<td>' + json_data[key]['tmbc_business_name'] + '</td>';
+                    contant += '<td class="business_color' + json_data[key]['tmbc_business_id'] + '"></td>';
+                    contant += '<td>' + json_data[key]['tmbc_memo'] + '</td>';
+                })                
+
+                console.log(contant);
+                $('#maintable_usage_guide').html(contant);
+            }
+		},
+
+		// HTTPエラー
+		error: function(XMLHttpRequest, textStatus, errorThrown) {         
+			alert("エラーが発生しました。システム管理者にお問い合わせください。");
+			console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+			console.log("textStatus     : " + textStatus);
+			console.log("errorThrown    : " + errorThrown.message);	
+		},
+
+		// 成功・失敗に関わらず通信が終了した際の処理
+		complete: function() {     
+		}
+	})	
+
+
+
+});

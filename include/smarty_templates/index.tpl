@@ -1,4 +1,19 @@
 {include file="common/common_header.tpl"}
+{literal}
+	<script>
+	$(window).on('load',function(){
+	let r = document.cookie.split(';');//split(';')を使用しデータを1つずつに分ける
+	console.log(document.cookie);
+	r.forEach(function(value) {
+	 
+		let content = value.split('=');//split('=')を使用しcookie名と値に分ける
+		
+		console.log(content[0]);
+	})
+
+});
+</script>
+{/literal}
 <!--メイン部分-->
 <body>
 	<div class = "container">
@@ -27,7 +42,7 @@
 	  </div>
 	  <div class="form-item">
 		<label for="password"></label>
-		<input type="password" name="user_pass" required="required" placeholder="パスワード"></input>
+		<input type="password" name="user_pass" required="required" placeholder="パスワード" autocomplete="new-password"></input>
 	  </div>
 	  <div class="button-panel">
 		<input type="submit" class="button" title="ログイン" value="ログイン" id="login_confirm" name="Submit"></input>

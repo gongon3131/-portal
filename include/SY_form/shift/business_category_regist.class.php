@@ -16,7 +16,7 @@ class SY_FORM_business_category_regist extends SY_Validate {
 			"tmbc_business_id" => array(
 				"title"	=> "業務番号",
 				"require" 	=> true,
-				"type" 		=> "INT",
+				"type" 		=> "TEXT",
 			),
 			"tmbc_business_name" => array(
 				"title"	=> "業務名",

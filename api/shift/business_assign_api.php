@@ -269,9 +269,9 @@ class SY_App extends SY_Framework{
                 $business_summary_ary[$val['tmbc_business_id']] = $w_ary;
             }
 
-
+            //ChromePhp::log($business_summary_ary);
             while($color = $stmt->fetch()){
-                if($color['tmur_authority'] == 1 && $color['tdsb_business_id'] > 0){
+                if($color['tmur_authority'] == 1 && $color['tdsb_business_id'] != ""){
                     $business_summary_ary[$color['tdsb_business_id']][$color['tdsb_shift_hour']] = $business_summary_ary[$color['tdsb_business_id']][$color['tdsb_shift_hour']] + 1;
                 }
             }        
@@ -404,7 +404,7 @@ class SY_App extends SY_Framework{
             $today = date("Y-m-d H:i:s");
             $user_id = $_SESSION['login_info']['user_id'];
 
-            $stmt->bindValue(":tmbc_business_id" , $this->vars['tmbc_business_id'] , PDO::PARAM_INT);//
+            $stmt->bindValue(":tmbc_business_id" , $this->vars['tmbc_business_id']);//
             $stmt->bindValue(":tmbc_business_name" , $this->vars['tmbc_business_name']);//
             $stmt->bindValue(":tmbc_color_code" , $this->vars['tmbc_color_code']);//
             $stmt->bindValue(":tmbc_import_class" , $this->vars['tmbc_import_class'] , PDO::PARAM_INT);//
@@ -417,7 +417,7 @@ class SY_App extends SY_Framework{
             //クエリ実行
             $execute = $stmt->execute();
             // DEBUG OUTPUT
-            //ChromePhp::log($this->db->pdo_debugStrParams($stmt));  
+            ChromePhp::log($this->db->pdo_debugStrParams($stmt));  
             
             //トランザクションコミット
             $this->mysql->commit();
@@ -446,7 +446,7 @@ class SY_App extends SY_Framework{
         $json = $_POST['business_assign_ary'];
         //POSTされたjsonを配列に変換
         $shift_data_ary = json_decode($json,true);
-
+        ChromePhp::log($shift_data_ary);  
         //エラーメッセージ取得
         $err_ary = $this->error->get();
 
@@ -543,7 +543,7 @@ class SY_App extends SY_Framework{
                     //ChromePhp::log($target_date); 
                     //$date_userid = date('Ymd',  $target_date);
                     if($color_ary['tdsb_shift_hour'] == "" || $color_ary['tdsb_business_id'] == ""){
-                        if($color_ary['tdsb_rest_flg'] == 0){
+                        if($color_ary['tdsb_rest_flg'] == 0 && $color_ary['tdsb_training_flg'] == 0){
                             break;
                         }
                     }
@@ -576,7 +576,7 @@ class SY_App extends SY_Framework{
                     //ChromePhp::log($color_ary);
                     //$tdsb_shift_date = $this->h($color_ary['tdsb_shift_date']);
                     if($color_ary['tdsb_shift_hour'] == "" || $color_ary['tdsb_business_id'] == ""){
-                        if($color_ary['tdsb_rest_flg'] == 0){
+                        if($color_ary['tdsb_rest_flg'] == 0 && $color_ary['tdsb_training_flg'] == 0){
                             break;
                         }
                     }
@@ -593,7 +593,7 @@ class SY_App extends SY_Framework{
                     $stmt->bindValue(":tdsb_shift_date".$index , $this->vars['tdbc_shift_date']);//シフト年月日
                     $stmt->bindValue(":tdsb_user_id".$index , $tdsb_user_id);//OPID
                     $stmt->bindValue(":tdsb_shift_hour".$index , $tdsb_shift_hour , PDO::PARAM_INT);//シフト時間帯
-                    $stmt->bindValue(":tdsb_business_id".$index , $tdsb_business_id , PDO::PARAM_INT);//業務番号
+                    $stmt->bindValue(":tdsb_business_id".$index , $tdsb_business_id);//業務番号
                     $stmt->bindValue(":tdsb_free_description".$index , $tdsb_free_description);//自由記述欄
                     $stmt->bindValue(":tdsb_rest_flg".$index , $tdsb_rest_flg , PDO::PARAM_INT);//休憩フラグ
                     $stmt->bindValue(":tdsb_training_flg".$index , $tdsb_training_flg , PDO::PARAM_INT);//研修フラグ                 

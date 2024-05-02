@@ -298,9 +298,13 @@ class SY_App extends SY_Framework{
                     //continue;
                 }else{
                     //変更前
-                    $shift_histry_ary['change_before'] = $shift_histry_ary['change_before']."　".$shift['tdsh_start_time_second_old']."-".$shift['tdsh_end_time_second_old'];
+                    if(empty($shift_histry_ary['change_before']) == false){
+                        $shift_histry_ary['change_before'] = $shift_histry_ary['change_before']."　".$shift['tdsh_start_time_second_old']."-".$shift['tdsh_end_time_second_old'];
+                    }
                     //変更後
-                    $shift_histry_ary['change_after'] = $shift_histry_ary['change_after']."　".$shift['tdsh_start_time_second']."-".$shift['tdsh_end_time_second'];
+                    if(empty($shift_histry_ary['change_after']) == false){
+                        $shift_histry_ary['change_after'] = $shift_histry_ary['change_after']."　".$shift['tdsh_start_time_second']."-".$shift['tdsh_end_time_second'];
+                    }
                 }
                 //ChromePhp::log($shift_histry_ary);
                 $total_shift_histry_ary[] = $shift_histry_ary;

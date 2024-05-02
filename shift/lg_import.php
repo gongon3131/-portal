@@ -70,7 +70,6 @@ class SY_App extends SY_Framework{
                 //シフト日付
                 $shift_date = $sheet->getCell("A2")->getValue();
                 
-                
                 while($sheet->getCell(chr($SHIFT_DATE).$row_num)->getValue() != ''){
 
                     //ID50000以上59999以下のみ処理をする
@@ -116,7 +115,7 @@ class SY_App extends SY_Framework{
                 }// end of while()
 
                 //ChromePhp::log($all_color_ary);
-
+                //print_r($all_color_ary);
                 try{
 
                     //トランザクション開始
@@ -190,16 +189,15 @@ class SY_App extends SY_Framework{
 
                             //業務番号情報の配列を逆引きにする
                             $color_info_rev = array_flip($color_info);
-
+                            
                             foreach($val as $shift_hour => $prefix){
 
                                 $today = date("Y-m-d H:i:s");
                                 $user_id = $_SESSION['login_info']['user_id'];
-                
                                 $stmt->bindValue(":tdsb_shift_date".$shift_hour , $prefix['shift_date']);//シフト日付
                                 $stmt->bindValue(":tdsb_user_id".$shift_hour , $target_userid);//ID
                                 $stmt->bindValue(":tdsb_shift_hour".$shift_hour , $shift_hour , PDO::PARAM_INT);//シフト時間
-                                $stmt->bindValue(":tdsb_business_id".$shift_hour , $color_info_rev[$prefix['prefix']] , PDO::PARAM_INT);//業務番号
+                                $stmt->bindValue(":tdsb_business_id".$shift_hour , $color_info_rev[$prefix['prefix']]);//業務番号
                                 $stmt->bindValue(":tdsb_create_date".$shift_hour , $today);
                                 $stmt->bindValue(":tdsb_update_date".$shift_hour , $today);
                                 $stmt->bindValue(":tdsb_update_user".$shift_hour , $user_id);

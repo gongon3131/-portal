@@ -483,7 +483,7 @@ class SY_App extends SY_Framework{
                     if($_POST['tdbp_business_possesion_'.$val['tmbc_business_id']] != 9){
 
                         $stmt->bindValue(":tdbp_user_id".$index , $this->vars['tmur_user_id']);//OPID
-                        $stmt->bindValue(":tdbp_business_id".$index , $val['tmbc_business_id'] , PDO::PARAM_INT);//業務番号
+                        $stmt->bindValue(":tdbp_business_id".$index , $val['tmbc_business_id']);//業務番号
                         $stmt->bindValue(":tdbp_business_possesion".$index , $_POST['tdbp_business_possesion_'.$val['tmbc_business_id']] , PDO::PARAM_INT);//スキル保有
                         $stmt->bindValue(":tdbp_create_date".$index , date("Y-m-d H:i:s"));
                         $stmt->bindValue(":tdbp_update_date".$index , date("Y-m-d H:i:s"));
@@ -638,6 +638,7 @@ class SY_App extends SY_Framework{
                     WHERE tdbp_user_id = :tdbp_user_id
                     ) AS tsp 
                 ON tsp.tdbp_business_id = tmb.tmbc_business_id
+                ORDER BY tmb.tmbc_business_id
             EOF;
             
             $stmt = $this->mysql->prepare($sql);

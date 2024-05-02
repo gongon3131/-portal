@@ -98,7 +98,15 @@ class SY_App extends SY_Framework{
 
                 //0時（E列）～23時（AB列）
                 foreach($val as $hour){
-                    $sheet->setCellValue(chr($HOUR_ZERO + $hour).$row_cnt,1);
+
+                    if($hour == 22){
+                        $sheet->setCellValue("AA".$row_cnt,1);
+                    }else if($hour == 23){
+                        $sheet->setCellValue("AB".$row_cnt,1);
+                    }else{
+                        $sheet->setCellValue(chr($HOUR_ZERO + $hour).$row_cnt,1);
+                    }
+
                 }
 
                 $row_cnt = $row_cnt + 1;
@@ -228,6 +236,7 @@ class SY_App extends SY_Framework{
                         WHERE tdsb_shift_date = :tdsb_shift_date
                         AND tmbc_import_class = :tmbc_import_class
                         AND tdsb_user_id = :tdsb_user_id
+                        ORDER BY tdsb_shift_hour
                     EOF;
                     $stmt = $this->mysql->prepare($sql);
                     //ChromePhp::log($this->db->pdo_debugStrParams($stmt));

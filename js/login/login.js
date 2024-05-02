@@ -60,3 +60,14 @@ $(document).on("click","#login_confirm", function() {
     param_ary['tmur_user_id'] = tmur_user_id;
     post(url,param_ary);
 });
+
+$(window).on('load',function(){
+	let r = document.cookie.split(';');//split(';')を使用しデータを1つずつに分ける
+ 
+	r.forEach(function(value) {
+	 
+		let content = value.split('=');//split('=')を使用しcookie名と値に分ける
+		
+		console.log(content[0]);
+	})
+});

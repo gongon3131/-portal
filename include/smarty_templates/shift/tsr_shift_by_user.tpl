@@ -18,6 +18,9 @@
 						<input id="section_sta" type="date" class="form-control ml-5 mr-2 date_pk" name="section_sta" value="{$section_sta}"  />～
 						<input id="section_end" type="date" class="form-control ml-2 mr-2 date_pk" name="section_end" value="{$section_end}"  />
 						<button type="button" class="btn btn-primary ml-3" id="show_list">表示</button>
+						{if $smarty.session.login_info.user_authority == 1}
+							<button type="button" class="btn btn-primary ml-3" id="show_usage_list" data-toggle="modal" data-target="#usage_guide_modal" data-backdrop="static">業務色分け表</button>
+						{/if}
 					</div>
 					{if $smarty.session.login_info.user_authority == 9}
 						<button type="button" class="btn btn-primary ml-3" id="tsr_shift_regist">登録</button>
@@ -111,6 +114,7 @@
 	{include file="modal/modal_shift_by_user_memo.tpl"}
 	{include file="modal/modal_hope_shift_detail.tpl"}
 	{include file="modal/modal_conflict.tpl"}
+	{include file="modal/modal_usage_guide.tpl"}
 	<script type="text/javascript" src="{$base_url}js/shift/tsr_shift_by_user.js?v={$ver}"> </script>
 	<script type="text/javascript" src="{$base_url}js/shift/tsr_shift_save.js?v={$ver}"> </script>
 	<script type="text/javascript" src="{$base_url}js/shift/tsr_shift_set.js?v={$ver}"> </script>
