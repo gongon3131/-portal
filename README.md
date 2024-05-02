@@ -1,40 +1,29 @@
+【網走CCシフト管理システム】
+
 http://192.168.4.233/new_portal/index.php
 
-管理者用	
+管理者テストユーザー
 
-ID	test	
+ID：59997／PASS：59997	
 
-PASS	test	
+SV用テストユーザー
 
-SV用	
+ID：59998 ／PASS：59998
 
-ID	test2	
+一般OP用	テストユーザー
 
-PASS	test
+ID：59999／PASS：59999	
 
-一般OP用	
-
-ID	test3
-
-PASS	test	
-
-
-SSH接続
+【SSH接続情報】
 
 port:22
 
 Host：192.168.4.233
 
-ID	root
+ID：root／PASS：WmJLfbZQXi2f
 
-PASS	WmJLfbZQXi2f
+【MySQL】
 
-
-MySQL
 http://192.168.4.233/phpmyadmin/
 
-
-ID	root
-
-PASS	H&B2BVyFX$5x
-
+ID：root／PASS：H&B2BVyFX$5x
