@@ -6,13 +6,6 @@ http://192.168.4.233/new_portal/index.php
 
 ID：59997／PASS：59997	
 
-SV用テストユーザー
-
-ID：59998 ／PASS：59998
-
-一般OP用	テストユーザー
-
-ID：59999／PASS：59999	
 
 【SSH接続情報】
 
