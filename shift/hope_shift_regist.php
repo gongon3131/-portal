@@ -85,6 +85,7 @@ class SY_App extends SY_Framework{
         }else{
             $this->result->add('section_sta',$section['tshs_start_date']);
             $this->result->add('section_end',$section['tshs_end_date']);
+            $this->result->add('dead_line',$section['tshs_dead_line']);
         }
 
         if($_SESSION['login_info']['user_authority'] == 9 && $this->vars['target'] == 1){

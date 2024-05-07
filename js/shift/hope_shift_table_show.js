@@ -289,6 +289,17 @@ function all_tab_clear(){
 //登録処理
 $(document).on("click","#hope_shift_regist", function() {
 
+	//登録締切日の確認
+	var dead_line = $("#dead_line").val();
+	//今日の日付
+	var today = get_today_date_ymd();
+
+	if(dead_line < today){
+		alert("登録締切日を過ぎているため登録できません");
+		return false;
+	}
+
+
 	//期間の始端と終端
 	var section_sta = $("#section_sta").val();
 	var section_end = $("#section_end").val();
@@ -297,7 +308,7 @@ $(document).on("click","#hope_shift_regist", function() {
         return false;
     }
 	
-	console.log(activated_tab);
+	//console.log(activated_tab);
 	var tab_name = "";
 	if(activated_tab !== undefined){
 		tab_name = activated_tab.href.replace("http://192.168.4.233/new_portal/shift/hope_shift_regist.php#" , "");

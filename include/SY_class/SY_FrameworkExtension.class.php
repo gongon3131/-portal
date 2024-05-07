@@ -211,7 +211,7 @@ class SY_FrameworkExtension extends SY_Base {
 	//希望シフト登録期間を取得（OP）
 	public function get_hope_shift_section(){
 
-		$sql = "SELECT tshs_start_date , tshs_end_date FROM ts_hope_shift_section WHERE tshs_reception_flg = 1";
+		$sql = "SELECT tshs_start_date , tshs_end_date , tshs_dead_line FROM ts_hope_shift_section WHERE tshs_reception_flg = 1";
 		$stmt = $this->mysql->prepare($sql);
 		//クエリ実行
 		$execute = $stmt->execute();    

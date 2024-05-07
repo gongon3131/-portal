@@ -22,7 +22,8 @@
 					{/if}
 				</div>
 				<input type="hidden" id="section_sta" value="{$section_sta}" ><!--希望シフト登録期間sta-->
-				<input type="hidden" id="section_end" value="{$section_end}" ><!--希望シフト登録期間end-->			
+				<input type="hidden" id="section_end" value="{$section_end}" ><!--希望シフト登録期間end-->		
+				<input type="hidden" id="dead_line" value="{$dead_line}" ><!--希望シフト締切日-->		
 				<input type="hidden" value="{$smarty.session.login_info.user_id}" id="user_id"><!--OPID-->
 				<input type="hidden" value="{$smarty.session.login_info.user_name}" id="user_name"><!--氏名-->
 				<input type="hidden" value="{$smarty.session.login_info.user_authority}" id="user_authority"><!--操作権限フラグ-->

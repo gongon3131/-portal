@@ -104,6 +104,8 @@ $(document).on("click",".business_category_regist", function() {
 		business_id_ary.push($(this).val());
 	});
 
+	console.log(business_id_ary);
+
 	//id取得
 	var id = $(this).data('id');
 

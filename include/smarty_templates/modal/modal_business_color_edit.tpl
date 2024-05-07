@@ -5,7 +5,7 @@
 			<!--モーダルフォーム本体-->
 			<div class="modal-body">
 				<div class="form-inline ml-5 mt-2 hope_shift_modal_header">	
-					<p class="ml-5">業務別カラー編集</p>
+					<p class="ml-2">業務別カラー編集</p>
 				</div>
 				<table class="table table-striped table-condensed table-sm table-hover hope_shift_detail">
 					<thead class="thead-dark">
