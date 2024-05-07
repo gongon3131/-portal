@@ -819,7 +819,7 @@ $(document).on("contextmenu","[id^=op-col]", function(e) {
     }
 
     document.getElementById('contextmenu').style.left=e.pageX+"px";
-    document.getElementById('contextmenu').style.top=e.pageY+"px";
+    document.getElementById('contextmenu').style.top=(e.pageY - 70 )+"px";
     document.getElementById('contextmenu').style.display="block";
 
     return false;
@@ -1259,7 +1259,7 @@ $(document).on("click","#business_color_regist", function() {
                 var url = "business_assign.php";
                 var param_ary = new Object();
                 param_ary['showen_date'] = showen_date;
-                //post(url,param_ary);
+                post(url,param_ary);
 
 			//登録失敗
 			}else if(json_data == "ng"){

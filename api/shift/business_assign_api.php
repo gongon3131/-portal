@@ -277,6 +277,7 @@ class SY_App extends SY_Framework{
             }        
 
             //ChromePhp::log($business_summary_ary);
+            //unset($business_summary_ary[0]);
             return $business_summary_ary;
 
         } catch(Exception $e) {
@@ -543,8 +544,11 @@ class SY_App extends SY_Framework{
                     //ChromePhp::log($target_date); 
                     //$date_userid = date('Ymd',  $target_date);
                     if($color_ary['tdsb_shift_hour'] == "" || $color_ary['tdsb_business_id'] == ""){
+
                         if($color_ary['tdsb_rest_flg'] == 0 && $color_ary['tdsb_training_flg'] == 0){
-                            break;
+                            ChromePhp::log($target_userid); 
+
+                            //break;
                         }
                     }
 
@@ -572,12 +576,13 @@ class SY_App extends SY_Framework{
             $index = 0;
 
             foreach($shift_data_ary as $target_userid => $val){
+
                 foreach($val as $key => $color_ary){
                     //ChromePhp::log($color_ary);
                     //$tdsb_shift_date = $this->h($color_ary['tdsb_shift_date']);
                     if($color_ary['tdsb_shift_hour'] == "" || $color_ary['tdsb_business_id'] == ""){
                         if($color_ary['tdsb_rest_flg'] == 0 && $color_ary['tdsb_training_flg'] == 0){
-                            break;
+                            //break;
                         }
                     }
                     
@@ -602,12 +607,13 @@ class SY_App extends SY_Framework{
                     $stmt->bindValue(":tdsb_update_user".$index , $user_id);
                     $index = $index + 1;
                 }
+
             }
 
             //クエリ実行
             $execute = $stmt->execute();
             // DEBUG OUTPUT
-            //ChromePhp::log($this->db->pdo_debugStrParams($stmt));  
+            ChromePhp::log($this->db->pdo_debugStrParams($stmt));  
             
             //トランザクションコミット
             $this->mysql->commit();

@@ -1014,10 +1014,10 @@ class SY_App extends SY_Framework{
             //ChromePhp::log($this->db->pdo_debugStrParams($stmt));
 
             /***************色付け情報の削除***************/
-            $sql_in = "(";
+            //$sql_in = "(";
 
             foreach($total_target_delete_ary as $target_id => $val){
-
+                $sql_in = "(";
                 foreach($val as $target_hour){
                     $sql_in = $sql_in.$target_hour.",";
                 }
@@ -1029,7 +1029,7 @@ class SY_App extends SY_Framework{
                 $stmt = $this->mysql->prepare($sql);
                 $stmt->bindValue(":tdsb_shift_date", $this->vars['tdbc_shift_date']);//
                 $stmt->bindValue(":tdsb_user_id" , $target_id);//
-
+                //ChromePhp::log($sql_in);  
                 //クエリ実行
                 $execute = $stmt->execute();
                 // DEBUG OUTPUT
@@ -1364,6 +1364,8 @@ class SY_App extends SY_Framework{
 
             //クエリ実行
             $execute = $stmt->execute();
+            // DEBUG OUTPUT
+            ChromePhp::log($this->db->pdo_debugStrParams($stmt));              
             $result = $stmt->fetchAll();
             $row_count = $stmt->rowCount();
 

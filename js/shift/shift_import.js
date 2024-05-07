@@ -47,8 +47,10 @@ $(document).on("click",".import_exec", function() {
         success: function(json_data) {   
 
             if(json_data == "ok"){
-
+                var year_str = ("" + datetime_from.getFullYear()).slice(-2);
+                var month_str = ("0" + datetime_from.getMonth() + 1).slice(-2);
                 var file_name = "http://192.168.4.233/new_portal/shift/import_download.php?target_filename=" + dateStr_from + "-" + dateStr_to + "_bno_" + business_no + ".xlsx";
+                //var file_name = "http://192.168.4.233/new_portal/shift/import_download.php?target_filename="+year_str+zeroPadding(datetime_from.getMonth()+1,2)+"_網走.xlsx";
                 console.log(file_name);
                 $("a#import_link").attr('href',file_name);
                 //ボタンの非活性を解除する

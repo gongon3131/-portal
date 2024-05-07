@@ -57,6 +57,7 @@ class SY_App extends SY_Framework{
         //ユーザーリスト
         $this->result->add('user_ary_kbn',$this->get_user_list(1));
         //ユーザーリスト初期値
+        ChromePhp::log($tmur_user_id); 
         $this->result->add('tmur_user_id',$tmur_user_id);
 
         //現在の希望シフト登録期間

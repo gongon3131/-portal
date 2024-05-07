@@ -122,6 +122,7 @@ class SY_App extends SY_Framework{
 
         //$this->result->add('filename',$filename);
         $filename = date('Ymd',  strtotime($period_from))."-".date('Ymd',  strtotime($period_to))."_bno_".$import_class_no.".xlsx";
+        //$filename = "網走_".date('ym',  strtotime($period_from)).".xlsx";
 
         //$outputPath = '../../excel/fugafuga.xlsx';
         $outputPath = '../../excel/'.$filename;

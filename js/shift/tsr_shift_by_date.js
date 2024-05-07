@@ -938,7 +938,8 @@ $(document).on("click",".shift_by_user", function() {
     var tmur_user_id =  $(this).data('userid');
     var section_sta = $("#section_sta").val();
     var section_end = $("#section_end").val();
-    var url = "before_confirm_by_user.php";
+    //var url = "before_confirm_by_user.php";
+    var url = "tsr_shift_by_user.php";
     var param_ary = new Object();
     param_ary['tmur_user_id'] = tmur_user_id;
     param_ary['section_sta'] = section_sta;

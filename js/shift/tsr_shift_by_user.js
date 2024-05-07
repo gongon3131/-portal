@@ -27,7 +27,10 @@ function by_user_kensaku(){
 	var section_sta = $("#section_sta").val();
 	var section_end = $("#section_end").val();
     //ユーザーID
-    $("#tmur_user_id").val($("#user_id").val());
+    if(user_authority == 1){
+        $("#tmur_user_id").val($("#user_id").val());
+    }
+    //$("#tmur_user_id").val($("#user_id").val());
     var tmur_user_id = $("#tmur_user_id").val();
     
     if(section_sta == "" && section_end == ""){
